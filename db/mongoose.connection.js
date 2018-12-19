@@ -1,8 +1,12 @@
 const mongoose = require("mongoose");
 
-const { DB_HOST, DB_PORT, DB_NAME } = process.env;
+/* const { DB_HOST, DB_PORT, DB_NAME } = process.env; */
 
-const uri = `mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`;
+/* const uri = `mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}` */
+
+const { MONGODB_URI } = process.env;
+
+const uri = `${MONGODB_URI}`;
 
 const options = {
   useNewUrlParser: true,
