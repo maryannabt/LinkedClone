@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt");
 
 router.use(express.json());
 
-// Load user model
+// Load User Model
 const User = require("../../models/User");
 
 // Load Input Validation
@@ -24,7 +24,7 @@ const {
 // @access  Public
 router.get("/test", (req, res) => res.json({ msg: "Users Works" }));
 
-// @route   GET api/users/register
+// @route   POST api/users/register
 // @desc    Register user
 // @access  Public
 router.post(
@@ -68,7 +68,7 @@ router.post(
   })
 );
 
-// @route   GET api/users/login
+// @route   POST api/users/login
 // @desc    Login user / Returning JWT token
 // @access  Public
 router.post(
@@ -115,7 +115,7 @@ router.get(
   asm(async (req, res) => {
     const user = await User.findById(req.user_id);
     if (!user) return res.status(404).json({ message: "No user found." });
-    res.status(200).json(user);
+    return res.status(200).json(user);
   })
 );
 

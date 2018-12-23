@@ -4,7 +4,7 @@ const isEmpty = require("./is-empty");
 module.exports = function validateRegisterInput(data) {
   let errors = {};
 
-  // in Validator.isEmpty the data.name must be a string. But if the user name is actually empty, the data.name won't be a string, so we make it an empty sting in that case
+  // in Validator.isEmpty the data.name must be a string. But if the user name is actually empty (not sumbitted by user in the form), the data.name won't be a string, so we set it to an empty sting in that case.
   data.name = !isEmpty(data.name) ? data.name : "";
   data.email = !isEmpty(data.email) ? data.email : "";
   data.password = !isEmpty(data.password) ? data.password : "";
