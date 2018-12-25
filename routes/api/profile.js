@@ -139,25 +139,39 @@ router.post(
     // Get fields
     const profileFields = {};
     profileFields.user = req.user_id;
-    if (req.body.handle) profileFields.handle = req.body.handle;
-    if (req.body.company) profileFields.company = req.body.company;
-    if (req.body.website) profileFields.website = req.body.website;
-    if (req.body.location) profileFields.location = req.body.location;
-    if (req.body.bio) profileFields.bio = req.body.bio;
-    if (req.body.status) profileFields.status = req.body.status;
-    if (req.body.githubusername)
-      profileFields.githubusername = req.body.githubusername;
+    const {
+      handle,
+      company,
+      website,
+      location,
+      bio,
+      status,
+      githubusername,
+      skills,
+      youtube,
+      twitter,
+      facebook,
+      linkedin,
+      instagram
+    } = req.body;
+    if (handle) profileFields.handle = handle;
+    if (company) profileFields.company = company;
+    if (website) profileFields.website = website;
+    if (location) profileFields.location = location;
+    if (bio) profileFields.bio = bio;
+    if (status) profileFields.status = status;
+    if (githubusername) profileFields.githubusername = githubusername;
     // Skills - Split into array
-    if (typeof req.body.skills !== "undefined") {
-      profileFields.skills = req.body.skills.split(",");
+    if (typeof skills !== "undefined") {
+      profileFields.skills = skills.split(",");
     }
     // Social
     profileFields.social = {};
-    if (req.body.youtube) profileFields.social.youtube = req.body.youtube;
-    if (req.body.twitter) profileFields.social.twitter = req.body.twitter;
-    if (req.body.facebook) profileFields.social.facebook = req.body.facebook;
-    if (req.body.linkedin) profileFields.social.linkedin = req.body.linkedin;
-    if (req.body.instagram) profileFields.social.instagram = req.body.instagram;
+    if (youtube) profileFields.social.youtube = youtube;
+    if (twitter) profileFields.social.twitter = twitter;
+    if (facebook) profileFields.social.facebook = facebook;
+    if (linkedin) profileFields.social.linkedin = linkedin;
+    if (instagram) profileFields.social.instagram = instagram;
 
     const profile = await Profile.findOne({ user: req.user_id });
     if (profile) {
@@ -203,14 +217,23 @@ router.post(
     }
 
     const profile = await Profile.findOne({ user: req.user_id });
+    const {
+      title,
+      company,
+      location,
+      from,
+      to,
+      current,
+      description
+    } = req.body;
     const newExp = {
-      title: req.body.title,
-      company: req.body.company,
-      location: req.body.location,
-      from: req.body.from,
-      to: req.body.to,
-      current: req.body.current,
-      description: req.body.description
+      title,
+      company,
+      location,
+      from,
+      to,
+      current,
+      description
     };
 
     // Add to experience array
@@ -237,14 +260,23 @@ router.post(
     }
 
     const profile = await Profile.findOne({ user: req.user_id });
+    const {
+      school,
+      degree,
+      fieldofstudy,
+      from,
+      to,
+      current,
+      description
+    } = req.body;
     const newEdu = {
-      school: req.body.school,
-      degree: req.body.degree,
-      fieldofstudy: req.body.fieldofstudy,
-      from: req.body.from,
-      to: req.body.to,
-      current: req.body.current,
-      description: req.body.description
+      school,
+      degree,
+      fieldofstudy,
+      from,
+      to,
+      current,
+      description
     };
 
     // Add to experience array
