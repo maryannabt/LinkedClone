@@ -17,6 +17,38 @@ const { verify_token } = require("../../utils/auth_middleware");
 // @access  Public
 router.get("/test", (req, res) => res.json({ msg: "Posts Works" }));
 
+// @route   GET api/posts
+// @desc    Get posts
+// @access  Public
+router.get(
+  "/",
+  asm(async (req, res) => {
+    try {
+      const posts = await Post.find().sort({ date: -1 });
+      return res.status(200).json(posts);
+    } catch (err) {
+      return res.status(404).json({ nopostsfound: "No posts found" });
+    }
+  })
+);
+
+// @route   GET api/posts/:id
+// @desc    Get post by id
+// @access  Public
+router.get(
+  "/:id",
+  asm(async (req, res) => {
+    try {
+      const post = await Post.findById(req.params.id);
+      return res.status(200).json(post);
+    } catch (err) {
+      return res
+        .status(404)
+        .json({ nopostfound: "No post found with that ID" });
+    }
+  })
+);
+
 // @route   POST api/posts
 // @desc    Create post
 // @access  Private
@@ -36,6 +68,29 @@ router.post(
     const post_data = { text, name, avatar, user: req.user_id };
     const newPost = await Post.create(post_data);
     return res.status(200).json(newPost);
+  })
+);
+
+// @route   DELETE api/posts/:id
+// @desc    Delete post
+// @access  Private
+router.delete(
+  "/:id",
+  verify_token,
+  asm(async (req, res) => {
+    try {
+      const post = await Post.findById(req.params.id);
+      // Check for post owner
+      if (post.user.toString() !== req.user_id) {
+        return res.status(401).json({ notauthorized: "User not authorized" });
+      }
+
+      // Delete
+      await post.remove();
+      return res.status(200).json({ success: true });
+    } catch (err) {
+      return res.status(404).json({ postnotfound: "No post found" });
+    }
   })
 );
 
