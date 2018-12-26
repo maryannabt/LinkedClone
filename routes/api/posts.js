@@ -94,4 +94,68 @@ router.delete(
   })
 );
 
+// @route   POST api/posts/like/:id
+// @desc    Like post
+// @access  Private
+router.post(
+  "/like/:id",
+  verify_token,
+  asm(async (req, res) => {
+    try {
+      const post = await Post.findById(req.params.id);
+      if (
+        post.likes.filter(like => like.user.toString() === req.user_id).length >
+        0
+      ) {
+        return res
+          .status(400)
+          .json({ alreadyliked: "User already liked this post" });
+      }
+
+      // Add user id to likes array
+      post.likes.unshift({ user: req.user_id });
+
+      const likedPost = await post.save();
+      return res.status(200).json(likedPost);
+    } catch (err) {
+      return res.status(404).json({ postnotfound: "No post found" });
+    }
+  })
+);
+
+// @route   POST api/posts/unlike/:id
+// @desc    Unike post
+// @access  Private
+router.post(
+  "/unlike/:id",
+  verify_token,
+  asm(async (req, res) => {
+    try {
+      const post = await Post.findById(req.params.id);
+      if (
+        post.likes.filter(like => like.user.toString() === req.user_id)
+          .length === 0
+      ) {
+        return res
+          .status(400)
+          .json({ notliked: "You have not yet liked this post" });
+      }
+
+      // Get remove index
+      const removeIndex = post.likes
+        .map(item => item.user.toString())
+        .indexOf(req.user_id);
+
+      // Splice out of array of likes
+      post.likes.splice(removeIndex, 1);
+
+      // Save
+      const unlikedPost = await post.save();
+      return res.status(200).json(unlikedPost);
+    } catch (err) {
+      return res.status(404).json({ postnotfound: "No post found" });
+    }
+  })
+);
+
 module.exports = router;
