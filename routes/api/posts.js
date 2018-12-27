@@ -158,4 +158,76 @@ router.post(
   })
 );
 
+// @route   POST api/posts/comment/:id
+// @desc    Add comment to post
+// @access  Private
+router.post(
+  "/comment/:id",
+  verify_token,
+  asm(async (req, res) => {
+    const { errors, isValid } = validatePostInput(req.body);
+
+    // Check Validation
+    if (!isValid) {
+      // If any errors, send 400 with errors object
+      return res.status(400).json(errors);
+    }
+    try {
+      const post = await Post.findById(req.params.id);
+      const { text, name, avatar } = req.body;
+      const newComment = {
+        text,
+        name,
+        avatar,
+        user: req.user_id
+      };
+
+      // Add to comments array
+      post.comments.unshift(newComment);
+
+      // Save
+      const commentPost = await post.save();
+      return res.status(200).json(commentPost);
+    } catch (err) {
+      return res.status(404).json({ postnotfound: "No post found" });
+    }
+  })
+);
+
+// @route   DELETE api/posts/comment/:id/:comment_id
+// @desc    Remove comment from post
+// @access  Private
+router.delete(
+  "/comment/:id/:comment_id",
+  verify_token,
+  asm(async (req, res) => {
+    try {
+      const post = await Post.findById(req.params.id);
+      // Check if the comment to the post exists
+      if (
+        post.comments.filter(
+          comment => comment.id.toString() === req.params.comment_id
+        ).length === 0
+      ) {
+        return res
+          .status(404)
+          .json({ commentnotexists: "Comment does not exists" });
+      }
+
+      // Get remove index
+      const removeIndex = post.comments
+        .map(item => item.id.toString())
+        .indexOf(req.params.comment_id);
+
+      // Splice comment out of array
+      post.comments.splice(removeIndex, 1);
+
+      const uncommentPost = await post.save();
+      return res.status(200).json(uncommentPost);
+    } catch (err) {
+      return res.status(404).json({ postnotfound: "No post found" });
+    }
+  })
+);
+
 module.exports = router;
