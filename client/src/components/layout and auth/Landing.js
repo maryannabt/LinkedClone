@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Img from "../../img/showcase.jpg";
 import { withRouter } from "react-router-dom";
 import { flexbox } from "../../utils/utils";
+import axios from "axios";
 
 class Landing extends Component {
   constructor(props) {
@@ -14,7 +15,8 @@ class Landing extends Component {
       password2: "",
       form_valid: true,
       error_msg: "",
-      error_field: ""
+      error_field: "",
+      errors: null
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -30,7 +32,12 @@ class Landing extends Component {
   }
 
   hideErrors() {
-    this.setState({ form_valid: true, error_msg: "", error_field: "" });
+    this.setState({
+      form_valid: true,
+      error_msg: "",
+      error_field: "",
+      errors: null
+    });
   }
 
   validateForm() {
@@ -98,25 +105,28 @@ class Landing extends Component {
     if (form_valid === false) return;
 
     // Extract relevant keys from props
-    const { history } = this.props;
+    // const { history } = this.props;
 
     // Create new user
-    const newUser = {
-      ...this.state
-    };
+    const newUser = this.state;
 
     // Remove these keys from the new user object
     delete newUser.form_valid;
     delete newUser.error_msg;
     delete newUser.error_field;
+    delete newUser.errors;
 
-    console.log(newUser);
+    axios
+      .post("/api/users/register", newUser)
+      .then(res => console.log(res.data))
+      .catch(err => this.setState({ errors: err.response.data }));
 
-    history.push("/");
     // history.push("/dashboard");
   }
 
   render() {
+    const { errors } = this.state;
+
     return (
       <Wrapper>
         <Box>
@@ -124,9 +134,18 @@ class Landing extends Component {
             <BigText>Be great at what you do</BigText>
             <SmallText>Get started - it's free.</SmallText>
           </Header>
-          <ErrorBox show={this.state.form_valid !== true}>
-            {this.state.error_msg}
-          </ErrorBox>
+          {/* Errors from the back end */}
+          {errors && (
+            <ErrorBox show={errors !== null}>
+              {errors[Object.keys(errors)[0]]}
+            </ErrorBox>
+          )}
+          {/* Errors from the front end */}
+          {!errors && (
+            <ErrorBox show={this.state.form_valid !== true}>
+              {this.state.error_msg}
+            </ErrorBox>
+          )}
           <Form>
             <FormText>Name</FormText>
             <Input

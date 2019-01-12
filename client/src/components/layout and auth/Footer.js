@@ -37,7 +37,7 @@ class LoginBottom extends Component {
     last_name: ""
   };
 
-  updateInfo = event => {
+  handleInputChange = event => {
     const target = event.target.value;
     const name = event.target.name;
     this.setState({ [name]: target });
@@ -51,12 +51,12 @@ class LoginBottom extends Component {
           <Input
             placeholder="First name"
             name="first_name"
-            onChange={this.updateInfo}
+            onChange={this.handleInputChange}
           />
           <Input
             placeholder="Last name"
             name="last_name"
-            onChange={this.updateInfo}
+            onChange={this.handleInputChange}
           />
           <SearchButton
             type="button"

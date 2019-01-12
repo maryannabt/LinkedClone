@@ -7,14 +7,15 @@ import { flexbox } from "../../utils/utils";
 class Navbar extends Component {
   state = {
     email: "",
-    password: ""
+    password: "",
+    errors: {}
   };
 
-  updateInfo(event) {
+  handleInputChange = event => {
     const target = event.target.value;
     const name = event.target.name;
     this.setState({ [name]: target });
-  }
+  };
 
   login() {
     if (this.state.email.length > 0 && this.state.password.length > 0) {
@@ -27,20 +28,20 @@ class Navbar extends Component {
     return (
       <Main>
         <Logo>
-          <Img src={LogoImg} onClick={() => this.props.history.push("/")} />
+          <Img src={LogoImg} />
         </Logo>
         <Login>
           <Form>
             <Email
               name="email"
               placeholder="Email"
-              onChange={this.updateInfo.bind(this)}
+              onChange={this.handleInputChange}
             />
             <Password
               name="password"
               type="password"
               placeholder="Password"
-              onChange={this.updateInfo.bind(this)}
+              onChange={this.handleInputChange}
             />
             <SignIn type="button" onClick={this.login.bind(this)}>
               Sign in
@@ -82,7 +83,6 @@ const Login = styled.div`
 const Img = styled.img`
   width: 11.1rem;
   height: 2.8rem;
-  cursor: pointer;
   margin-left: 10.5rem;
 `;
 
