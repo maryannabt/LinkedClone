@@ -1,7 +1,6 @@
 const asm = require("../../utils/async_middleware");
 const express = require("express");
 const router = express.Router();
-const gravatar = require("gravatar");
 const bcrypt = require("bcrypt");
 
 router.use(express.json());
@@ -19,12 +18,7 @@ const {
   tokenize
 } = require("../../utils/auth_middleware");
 
-// @route   GET api/users/test
-// @desc    Tests users route
-// @access  Public
-router.get("/test", (req, res) => res.json({ msg: "Users Works" }));
-
-// @route   POST api/users/register
+// @route   POST api/auth/register
 // @desc    Register user
 // @access  Public
 router.post(
@@ -34,25 +28,23 @@ router.post(
 
     // Check Validation
     if (!isValid) {
-      return res.status(400).json(errors);
+      return res
+        .status(400)
+        .json({ ...false_response, message: errors[Object.keys(errors)[0]] });
     }
 
     const user = await User.findOne({ email: req.body.email });
     if (user) {
-      errors.email = "Email already exists";
-      return res.status(400).json(errors);
+      errors.email = "User with this email already exists";
+      return res
+        .status(400)
+        .json({ ...false_response, message: errors[Object.keys(errors)[0]] });
     }
 
-    const avatar = gravatar.url(req.body.email, {
-      s: "200", // Size
-      r: "pg", // Rating
-      d: "mm" // Default
-    });
     const hashedPassword = await bcrypt.hash(req.body.password, 8);
 
     const user_data = {
       ...req.body,
-      avatar,
       password: hashedPassword
     };
     const newUser = await User.create(user_data);
@@ -68,7 +60,7 @@ router.post(
   })
 );
 
-// @route   POST api/users/login
+// @route   POST api/auth/login
 // @desc    Login user / Returning JWT token
 // @access  Public
 router.post(
@@ -106,16 +98,20 @@ router.post(
   })
 );
 
-// @route   GET api/users/current
+// @route   GET api/auth/me
 // @desc    Return current user
 // @access  Private
 router.get(
-  "/current",
+  "/me",
   verify_token,
   asm(async (req, res) => {
     const user = await User.findById(req.user_id);
     if (!user) return res.status(404).json({ message: "No user found." });
-    return res.status(200).json(user);
+    console.log("Token: ", req.user_id);
+    return res.status(200).json({
+      user,
+      auth: true
+    });
   })
 );
 

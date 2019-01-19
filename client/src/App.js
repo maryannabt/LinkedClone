@@ -1,27 +1,21 @@
 import React, { Component } from "react";
 import "./App.css";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import styled from "styled-components";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { flexbox } from "./utils/utils";
-
-import Navbar from "./components/layout and auth/Navbar";
-import Footer from "./components/layout and auth/Footer";
-import Landing from "./components/layout and auth/Landing";
+import TopBar from "./components/TopBar/TopBar";
+import Login from "./components/Login/Login";
 
 class App extends Component {
   render() {
     return (
-      <Router>
+      <BrowserRouter>
         <Wrapper>
-          <Navbar />
-          <Container>
-            <Switch>
-              <Route exact path="/" component={Landing} />
-            </Switch>
-            <Footer />
-          </Container>
+          <TopBar />
+          <Switch>
+            <Route exact path="/" component={Login} />
+          </Switch>
         </Wrapper>
-      </Router>
+      </BrowserRouter>
     );
   }
 }
@@ -29,14 +23,7 @@ class App extends Component {
 export default App;
 
 //CSS//
-
 const Wrapper = styled.div`
   display: flex;
   flex-basis: 100%;
-`;
-
-const Container = styled.div`
-  ${flexbox({ d: "column" })}
-  width: 100%;
-  margin-top: 5.2rem;
 `;

@@ -1,22 +1,26 @@
+/* Rendered in Login component which is connected to the redux store.
+   Props: createNewUser - action dispatcher for creating a user, takes in user data as an argument.
+          clearLoginFormErrMsg - action dispatcher for clearing the errors that came from the back end server (errorMsg).
+          errorMsg - value derived from the state as a result of loginData reducer operation. */
+
 import React, { Component } from "react";
 import styled from "styled-components";
 import Img from "../../img/showcase.jpg";
 import { withRouter } from "react-router-dom";
 import { flexbox } from "../../utils/utils";
-import axios from "axios";
 
-class Landing extends Component {
+class LoginForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "",
+      first_name: "",
+      last_name: "",
       email: "",
       password: "",
-      password2: "",
+      registrationWizard: "not done",
       form_valid: true,
       error_msg: "",
-      error_field: "",
-      errors: null
+      error_field: ""
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -35,8 +39,7 @@ class Landing extends Component {
     this.setState({
       form_valid: true,
       error_msg: "",
-      error_field: "",
-      errors: null
+      error_field: ""
     });
   }
 
@@ -50,10 +53,17 @@ class Landing extends Component {
       return form_valid;
     };
 
-    if (this.state.name === "") {
+    if (this.state.first_name === "") {
       form_valid = false;
-      error_msg = "Please enter your name";
-      error_field = "name";
+      error_msg = "Please enter your first name";
+      error_field = "first_name";
+      return conclude();
+    }
+
+    if (this.state.last_name === "") {
+      form_valid = false;
+      error_msg = "Please enter your last name";
+      error_field = "last_name";
       return conclude();
     }
 
@@ -64,7 +74,7 @@ class Landing extends Component {
       return conclude();
     }
 
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const re = /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if (re.test(String(this.state.email).toLowerCase()) === false) {
       form_valid = false;
@@ -86,16 +96,14 @@ class Landing extends Component {
       error_field = "password";
       return conclude();
     }
-
-    if (this.state.password2 !== this.state.password) {
-      form_valid = false;
-      error_msg = "Please confirm your password";
-      error_field = "password2";
-      return conclude();
-    }
   }
 
   submitForm(e) {
+    const { createNewUser, clearLoginFormErrMsg } = this.props;
+
+    this.setState({ form_valid: true });
+    clearLoginFormErrMsg();
+
     // Prevent page reload - default form submit behaviour
     e.preventDefault();
 
@@ -104,9 +112,6 @@ class Landing extends Component {
     // Do not proceed any further if the form is not valid
     if (form_valid === false) return;
 
-    // Extract relevant keys from props
-    // const { history } = this.props;
-
     // Create new user
     const newUser = this.state;
 
@@ -114,19 +119,16 @@ class Landing extends Component {
     delete newUser.form_valid;
     delete newUser.error_msg;
     delete newUser.error_field;
-    delete newUser.errors;
 
-    axios
-      .post("/api/users/register", newUser)
-      .then(res => console.log(res.data))
-      .catch(err => this.setState({ errors: err.response.data }));
+    // Dispatch action from props
+    createNewUser(newUser);
+  }
 
-    // history.push("/dashboard");
+  componentWillUnmount() {
+    this.props.clearLoginFormErrMsg();
   }
 
   render() {
-    const { errors } = this.state;
-
     return (
       <Wrapper>
         <Box>
@@ -135,24 +137,33 @@ class Landing extends Component {
             <SmallText>Get started - it's free.</SmallText>
           </Header>
           {/* Errors from the back end */}
-          {errors && (
-            <ErrorBox show={errors !== null}>
-              {errors[Object.keys(errors)[0]]}
+          {this.props.errorMsg && (
+            <ErrorBox show={this.props.errorMsg !== null}>
+              {this.props.errorMsg}
             </ErrorBox>
           )}
           {/* Errors from the front end */}
-          {!errors && (
+          {!this.props.errorMsg && (
             <ErrorBox show={this.state.form_valid !== true}>
               {this.state.error_msg}
             </ErrorBox>
           )}
           <Form>
-            <FormText>Name</FormText>
+            <FormText>First name</FormText>
             <Input
               onChange={this.handleInputChange}
-              name="name"
+              name="first_name"
               type="text"
-              error_styled={this.state.error_field === "name"}
+              error_styled={this.state.error_field === "first_name"}
+              onBlur={this.validateForm}
+              onFocus={this.hideErrors}
+            />
+            <FormText>Last name</FormText>
+            <Input
+              onChange={this.handleInputChange}
+              name="last_name"
+              type="text"
+              error_styled={this.state.error_field === "last_name"}
               onBlur={this.validateForm}
               onFocus={this.hideErrors}
             />
@@ -165,9 +176,6 @@ class Landing extends Component {
               onBlur={this.validateForm}
               onFocus={this.hideErrors}
             />
-            <GravText>
-              If you want a profile image, please use a Gravatar email.
-            </GravText>
             <FormText type="password">Password (6 or more characters)</FormText>
             <Input
               onChange={this.handleInputChange}
@@ -177,21 +185,12 @@ class Landing extends Component {
               onBlur={this.validateForm}
               onFocus={this.hideErrors}
             />
-            <FormText type="password">Confirm password</FormText>
-            <Input
-              onChange={this.handleInputChange}
-              name="password2"
-              type="password"
-              error_styled={this.state.error_field === "password2"}
-              onBlur={this.validateForm}
-              onFocus={this.hideErrors}
-            />
             <Term>
               By clicking Join now, you agree to the LinkedIn User Agreement,
               Privacy Policy, and <span>Cookie Policy.</span>
             </Term>
             <Submit type="button" onClick={this.submitForm}>
-              Join Now
+              Join now
             </Submit>
           </Form>
         </Box>
@@ -200,23 +199,27 @@ class Landing extends Component {
   }
 }
 
-export default withRouter(Landing);
+export default withRouter(LoginForm);
 
 //CSS//
 const Wrapper = styled.div`
 width: 100%;
-height: 58rem;
+height: 56rem;
 background-color: lightcyan;
 background-image: url('${Img}');
 background-size: cover;
 ${flexbox()}
+
+@media only screen and (max-width: 580px) {
+   height: 76rem;
+}
 `;
 
 const Box = styled.div`
   width: 40rem;
   background-color: #edf0f3;
   ${flexbox({ d: "column" })}
-  padding: 2px 0 2.5rem;
+  padding: 2px 0 1rem;
   border-radius: 2px;
 `;
 
@@ -231,10 +234,12 @@ const Header = styled.div`
 const BigText = styled.div`
   font-size: 2.6rem;
   padding: 0.5rem 1rem;
+  color: rgba(0, 0, 0, 0.9);
+  font-weight: 400;
 `;
 
 const SmallText = styled(BigText)`
-  font-size: 1.6rem;
+  font-size: 1.7rem;
 `;
 
 const Form = styled.form`
@@ -242,25 +247,19 @@ const Form = styled.form`
   height: 35rem;
   display: flex;
   flex-direction: column;
-  color: black;
+  color: rgba(0, 0, 0, 0.9);
+  font-weight: 400;
   padding-top: 1rem;
 `;
 
 const FormText = styled.div`
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   margin: 0.5rem 0;
-`;
-
-const GravText = styled.div`
-  width: 100%;
-  text-align: left;
-  font-size: 1.1rem;
-  margin: 0.3rem 0 0.4rem;
 `;
 
 const Input = styled.input`
   width: 100%;
-  height: 2.7rem;
+  height: 2.8rem;
   border: 1px ${props => (props.error_styled ? "red" : "rgba(0,0,0,0.15)")}
     solid;
 `;
@@ -271,6 +270,7 @@ const Term = styled.span`
   margin-top: 1rem;
   margin-bottom: 1.5rem;
   font-size: 1.2rem;
+  color: rgba(0, 0, 0, 0.6);
 
   & span {
     text-decoration: none;
@@ -284,11 +284,12 @@ const Term = styled.span`
 
 const Submit = styled.button`
   width: 100%;
-  height: 3.5rem;
+  height: 3rem;
   border: none;
   color: white;
   background-color: #0073b1;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
+  border-radius: 2px;
   cursor: pointer;
 
   &:hover {

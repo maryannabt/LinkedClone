@@ -5,7 +5,9 @@ const morgan = require("morgan");
 
 const db = require("./db/mongoose.connection");
 
-const users = require("./routes/api/users");
+const authRouter = require("./routes/api/auth.router");
+const userRouter = require("./routes/api/user.router");
+
 const profile = require("./routes/api/profile");
 const posts = require("./routes/api/posts");
 
@@ -20,7 +22,9 @@ app.get("/api", (req, res) => {
 });
 
 // Actual routing
-app.use("/api/users", users);
+app.use("/api/auth", authRouter);
+// app.use("/api/user", userRouter);
+
 app.use("/api/profile", profile);
 app.use("/api/posts", posts);
 

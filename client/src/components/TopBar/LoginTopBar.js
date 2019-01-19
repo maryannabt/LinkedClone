@@ -1,14 +1,15 @@
+/* Rendered in TopBar component which is connected to the redux store. */
+
 import React, { Component } from "react";
 import styled from "styled-components";
 import LogoImg from "../../img/logo.png";
 import { withRouter } from "react-router-dom";
 import { flexbox } from "../../utils/utils";
 
-class Navbar extends Component {
+class LoginTopBar extends Component {
   state = {
     email: "",
-    password: "",
-    errors: {}
+    password: ""
   };
 
   handleInputChange = event => {
@@ -17,12 +18,12 @@ class Navbar extends Component {
     this.setState({ [name]: target });
   };
 
-  login() {
+  login = () => {
     if (this.state.email.length > 0 && this.state.password.length > 0) {
       const userData = this.state;
       this.props.loginUser(userData);
     }
-  }
+  };
 
   render() {
     return (
@@ -43,7 +44,7 @@ class Navbar extends Component {
               placeholder="Password"
               onChange={this.handleInputChange}
             />
-            <SignIn type="button" onClick={this.login.bind(this)}>
+            <SignIn type="button" onClick={this.login}>
               Sign in
             </SignIn>
           </Form>
@@ -55,35 +56,44 @@ class Navbar extends Component {
   }
 }
 
-export default withRouter(Navbar);
+export default withRouter(LoginTopBar);
 
 //CSS//
 const Main = styled.div`
   display: flex;
   width: 100%;
-  height: 5.2rem;
-  position: absolute;
-  background-color: #283e4a;
-  top: 0;
-  z-index: 2;
+  height: 100%;
 `;
 
 const Logo = styled.div`
   height: 100%;
   width: 30%;
   ${flexbox()}
+
+  @media only screen and (max-width: 580px) {
+    width: 15%;
+  }
 `;
 
 const Login = styled.div`
   height: 100%;
   width: 70%;
   ${flexbox()}
+
+  @media only screen and (max-width: 580px) {
+    width: 85%;
+  }
 `;
 
 const Img = styled.img`
   width: 11.1rem;
   height: 2.8rem;
-  margin-left: 10.5rem;
+  /* margin-left: 10.5rem; */
+
+  @media only screen and (max-width: 580px) {
+    width: 5rem;
+    height: 1.5rem;
+  }
 `;
 
 const Form = styled.form`
@@ -99,7 +109,17 @@ const Email = styled.input`
   border-radius: 2px;
   background-color: #f3f6f8;
   border: 1px solid #b3b6b9;
+  font-size: 1.4rem;
   font-weight: 600;
+
+  @media only screen and (max-width: 580px) {
+    width: 16rem;
+    height: 2.4rem;
+  }
+  @media only screen and (max-width: 480px) {
+    width: 11rem;
+    height: 1.98rem;
+  }
 `;
 
 const Password = styled(Email)``;
@@ -112,6 +132,11 @@ const SignIn = styled.button`
   background-color: transparent;
   font-size: 1.6rem;
   cursor: pointer;
+
+  @media only screen and (max-width: 480px) {
+    width: 7rem;
+    font-size: 1.2rem;
+  }
 
   &:hover {
     background-color: white;
@@ -126,6 +151,10 @@ const ForgotPass = styled.div`
   padding: 1rem 2rem;
   font-size: 1.2rem;
   cursor: pointer;
+
+  @media only screen and (max-width: 580px) {
+    margin-left: 1rem;
+  }
 
   &:hover {
     color: white;

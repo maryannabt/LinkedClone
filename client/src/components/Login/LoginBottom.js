@@ -1,3 +1,5 @@
+/* Rendered in Login component. */
+
 import React, { Component } from "react";
 import styled from "styled-components";
 import FooterImg from "../../img/footer_logo.png";
@@ -47,7 +49,7 @@ class LoginBottom extends Component {
     return (
       <Main>
         <Form>
-          <span>Find a colleague</span>
+          <FindColleague>Find a colleague</FindColleague>
           <Input
             placeholder="First name"
             name="first_name"
@@ -143,6 +145,17 @@ const Form = styled.form`
   color: white;
   font-size: 1.6rem;
   margin-top: 3rem;
+
+  @media only screen and (max-width: 480px) {
+    font-size: 1.2rem;
+    overflow: hidden;
+  }
+`;
+
+const FindColleague = styled.span`
+  @media only screen and (max-width: 480px) {
+    width: 5.2rem;
+  }
 `;
 
 const Input = styled.input`
@@ -153,6 +166,14 @@ const Input = styled.input`
   font-size: 1.4rem;
   width: 23.2rem;
   height: 2.8rem;
+
+  @media only screen and (max-width: 480px) {
+    width: 16rem;
+    height: 2.52rem;
+  }
+  @media only screen and (max-width: 360px) {
+    margin-left: 0.5rem;
+  }
 `;
 
 const SearchButton = styled.button`
@@ -184,6 +205,12 @@ const ABC = styled.div`
   font-size: 1.4rem;
   font-weight: 400;
   margin-top: 2rem;
+  flex-wrap: wrap;
+
+  @media only screen and (max-width: 480px) {
+    font-size: 1rem;
+    overflow: hidden;
+  }
 `;
 
 const Letter = styled.div`
@@ -191,6 +218,10 @@ const Letter = styled.div`
   margin-left: 0.75rem;
   font-size: 1.4rem;
   text-transform: uppercase;
+
+  @media only screen and (max-width: 480px) {
+    font-size: 1.2rem;
+  }
 
   &:hover {
     text-decoration: underline;
@@ -203,6 +234,10 @@ const More = styled(Letter)`
 
 const Browse = styled(More)`
   margin-left: 2rem;
+
+  @media only screen and (max-width: 480px) {
+    margin-left: 1rem;
+  }
 `;
 
 const Links = styled.div`
@@ -211,7 +246,7 @@ const Links = styled.div`
   border-top: 1px solid rgba(255, 255, 255, 0.15);
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
   display: flex;
-  width: 112.8rem;
+  width: 75%;
   flex-wrap: wrap;
   justify-content: start;
 `;
@@ -223,6 +258,14 @@ const LinkBox = styled.div`
   font-size: 1.4rem;
   width: 45%;
   margin: 0 5rem 3rem 4px;
+
+  @media only screen and (max-width: 1460px) {
+    flex-basis: 40%;
+  }
+
+  @media only screen and (max-width: 580px) {
+    flex-basis: 35%;
+  }
 `;
 
 const LinkBoxTitle = styled.div`
@@ -232,6 +275,7 @@ const LinkBoxTitle = styled.div`
 const LinkBoxList = styled.div`
   display: flex;
   margin-top: 0.9rem;
+  flex-wrap: wrap;
 `;
 
 const Link = styled.div`
@@ -240,6 +284,10 @@ const Link = styled.div`
   color: white;
   font-size: 1.4rem;
   font-weight: 400;
+
+  @media only screen and (max-width: 580px) {
+    font-size: 1.2rem;
+  }
 
   &:hover {
     text-decoration: underline;
@@ -250,7 +298,12 @@ const BottomBar = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 2rem;
-  width: 112.8rem;
+  width: 75%;
+  overflow: hidden;
+
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 const Img = styled.img`
