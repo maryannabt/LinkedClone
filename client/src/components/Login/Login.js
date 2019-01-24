@@ -16,7 +16,11 @@ import {
 class Login extends Component {
   render() {
     const { createNewUser, clearLoginFormErrMsg } = this.props;
-    const { errorMsg } = this.props.loginData;
+    const { auth, user, errorMsg } = this.props.loginData;
+
+    if (auth && user.registrationWizard !== "done") {
+      this.props.history.push("/start/location");
+    }
 
     return (
       <Wrapper>

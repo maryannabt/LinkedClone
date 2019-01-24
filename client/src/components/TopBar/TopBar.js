@@ -3,19 +3,47 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import LoginTopBar from "./LoginTopBar";
+import TutorialTopBar from "./TutorialTopBar";
+import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 class TopBar extends Component {
   render() {
-    return (
-      <Wrapper>
-        <LoginTopBar />
-      </Wrapper>
-    );
+    const { auth } = this.props.loginData;
+
+    if (auth) {
+      return (
+        <Wrapper loged={auth}>
+          <TutorialTopBar />
+        </Wrapper>
+      );
+    } else {
+      return (
+        <Wrapper>
+          <LoginTopBar />
+        </Wrapper>
+      );
+    }
   }
 }
 
-export default withRouter(TopBar);
+function mapStateToProps(state, ownProps) {
+  const { loginData } = state;
+
+  return {
+    loginData
+  };
+}
+function mapDispatchToProps(dispatch) {
+  return {};
+}
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(TopBar)
+);
 
 //CSS//
 const Wrapper = styled.div`

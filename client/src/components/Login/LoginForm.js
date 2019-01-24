@@ -18,6 +18,7 @@ class LoginForm extends Component {
       email: "",
       password: "",
       registrationWizard: "not done",
+      // For front end form validation only:
       form_valid: true,
       error_msg: "",
       error_field: ""

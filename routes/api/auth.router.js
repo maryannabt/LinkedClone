@@ -115,4 +115,22 @@ router.get(
   })
 );
 
+// @route   POST api/auth/update/:id
+// @desc    Update current user
+// @access  Public
+
+router.post(
+  "/update/:id",
+  asm(async (req, res) => {
+    try {
+      const selectedUser = await User.findById(req.params.id);
+      await selectedUser.updateOne(req.body);
+      const updatedUser = await User.findById(req.params.id);
+      return res.status(200).json({ selectedUserUpdate: updatedUser });
+    } catch (err) {
+      next(new Error(err));
+    }
+  })
+);
+
 module.exports = router;

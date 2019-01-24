@@ -9,6 +9,11 @@ import {
   CREATING_USER_ERROR
 } from "./Login.actions";
 import { CLEAR_LOGIN_FORM_ERROR_MSG } from "./Login.actions";
+import {
+  UPDATING_USER_LOCATION,
+  USER_LOCATION_UPDATED,
+  USER_LOCATION_UPDATE_ERROR
+} from "./Login.actions";
 
 let originalState = {
   userDoneTutorial: false,
@@ -62,6 +67,26 @@ export default (state = originalState, action) => {
       return {
         ...state,
         errorMsg: null
+      };
+
+    //User Location Update//
+    case UPDATING_USER_LOCATION:
+      return {
+        ...state,
+        userLocationUpdated: false
+      };
+
+    case USER_LOCATION_UPDATED:
+      return {
+        ...state,
+        userLocationUpdated: true,
+        user: action.payload.selectedUserUpdate
+      };
+
+    case USER_LOCATION_UPDATE_ERROR:
+      return {
+        ...state,
+        userLocationUpdated: action.payload
       };
 
     default:
