@@ -5,6 +5,7 @@ import styled from "styled-components";
 import TopBar from "./components/TopBar/TopBar";
 import Login from "./components/Login/Login";
 import LoginStage1 from "./components/Login/LoginStage1";
+import LoginStage2 from "./components/Login/LoginStage2";
 
 class App extends Component {
   render() {
@@ -15,6 +16,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Login} />
             <Route path="/start/location" component={LoginStage1} />
+            <Route path="/start/profile" component={LoginStage2} />
           </Switch>
         </Wrapper>
       </BrowserRouter>

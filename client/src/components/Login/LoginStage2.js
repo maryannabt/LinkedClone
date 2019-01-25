@@ -1,19 +1,19 @@
-/* Rendered in App component with path "/start/location". Connected to the redux store.
-   Dispatches an action updateUserLocation which takes in user data delivered from the local state of the component. */
+/* Rendered in App component with path "/start/profile". Connected to the redux store.
+   Dispatches an action updateUserJob which takes in user data delivered from the local state of the component. */
 
 import React, { Component } from "react";
 import styled from "styled-components";
-import { CountryDropdown } from "react-country-region-selector";
 import { connect } from "react-redux";
-import { flexbox } from "../../utils/utils";
 
 //Actions//
-import { updateUserLocation } from "./LoginReducer/Login.actions";
+import { updateUserJob } from "./LoginReducer/Login.actions";
 
-class LoginStage1 extends Component {
+class LoginStage2 extends Component {
   state = {
-    country: "",
-    postal_code: ""
+    job_title: "",
+    company_name: "",
+    industry: "",
+    showIndustry: false
   };
 
   handleInputChange = event => {
@@ -22,32 +22,33 @@ class LoginStage1 extends Component {
     this.setState({ [name]: target });
   };
 
-  selectCountry(val) {
-    this.setState({ country: val });
-  }
+  showIndustry = () => {
+    this.setState({ showIndustry: true });
+  };
 
   finishStage = () => {
     const userData = this.state;
     userData.id = this.props.loginData.user._id;
-    this.props.updateUserLocation(userData);
+    delete userData.showIndustry;
+    this.props.updateUserJob(userData);
   };
 
   render() {
-    const { auth, user, userLocationUpdated } = this.props.loginData;
+    const { userJobUpdated } = this.props.loginData;
 
     return (
       <Wrapper>
-        {userLocationUpdated && this.props.history.push("/start/profile")}
+        {userJobUpdated && this.props.history.push("/start/photo")}
 
         <ProgressDiv>
           <ProgressPoint>
-            <ProgressPointCircle status={"progress"} />
-            <ProgressText status={"progress"}>Location</ProgressText>
+            <ProgressPointCircle status={"done"} />
+            <ProgressText status={"done"}>Location</ProgressText>
           </ProgressPoint>
           <ProgressPoint>
-            <ProgressPointCircle status={"no"} />
-            <ProgressText status={"no"}>Job Info</ProgressText>
-            <ProgressLine status={"no"} />
+            <ProgressPointCircle status={"progress"} />
+            <ProgressText status={"progress"}>Job Info</ProgressText>
+            <ProgressLine status={"done"} />
           </ProgressPoint>
           <ProgressPoint>
             <ProgressPointCircle status={"no"} />
@@ -57,32 +58,39 @@ class LoginStage1 extends Component {
         </ProgressDiv>
 
         <Main>
-          <Title>Welcome, {auth && user.first_name}!</Title>
           <Text>
-            Let’s start your profile, connect to people you know, and engage
-            with them on topics you care about.
+            Your profile helps you discover the right people and opportunities
           </Text>
-          <InfoDescription>Country/Region</InfoDescription>
-          <CountryDropdown
-            value={this.state.country}
-            onChange={val => this.selectCountry(val)}
-            style={CountryInput}
-            priorityOptions={["IL"]}
-          />
-          <InfoDescription>Postal code</InfoDescription>
+
+          <InfoDescription>Most recent job title *</InfoDescription>
+          <Input name="job_title" onChange={this.handleInputChange} />
+
+          <InfoDescription>Most recent company *</InfoDescription>
           <Input
-            name="postal_code"
-            placeholder="4936212"
+            name="company_name"
+            onChange={this.handleInputChange}
+            onClick={this.showIndustry}
+          />
+
+          <IndustryDes show={this.state.showIndustry}>Industry *</IndustryDes>
+          <IndustryInput
+            show={this.state.showIndustry}
+            name="industry"
+            placeholder="Select Industry"
             onChange={this.handleInputChange}
           />
-          <Button onClick={this.finishStage}>Next</Button>
+
+          <StudentButton onClick={this.finishStage}>
+            I'm a student
+          </StudentButton>
+          <Button onClick={this.finishStage}>Continue</Button>
         </Main>
       </Wrapper>
     );
   }
 }
 
-// Redux //
+//Redux
 function mapStateToProps(state) {
   const { loginData } = state;
 
@@ -92,34 +100,28 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
   return {
-    updateUserLocation: userData => dispatch(updateUserLocation(userData))
+    updateUserJob: userData => dispatch(updateUserJob(userData))
   };
 }
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(LoginStage1);
+)(LoginStage2);
 
 //CSS//
-const CountryInput = {
-  width: "40.1rem",
-  height: "3.5rem",
-  border: "1px solid black",
-  paddingLeft: "1rem",
-  fontWeight: "400"
-};
-
 const Wrapper = styled.div`
   width: 100%;
   height: 62.4rem;
   background-color: #ffffff;
-  ${flexbox({ d: "column" })}
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 
   @media only screen and (max-width: 580px) {
     height: 100vh;
   }
 `;
-
 const Main = styled.div`
   width: 74rem;
   display: flex;
@@ -127,18 +129,13 @@ const Main = styled.div`
   align-items: center;
   color: rgba(0, 0, 0, 0.6);
 `;
-
-const Title = styled.div`
-  font-size: 4rem;
-  margin-bottom: 2rem;
-  color: black;
-`;
 const Text = styled.div`
-  font-size: 1.8rem;
+  color: black;
+  font-size: 3rem;
   text-align: center;
-  margin-bottom: 5rem;
+  margin-top: 3rem;
+  margin-bottom: 4rem;
 `;
-
 const InfoDescription = styled.div`
   display: flex;
   font-size: 1.6rem;
@@ -146,14 +143,12 @@ const InfoDescription = styled.div`
   height: 1.6rem;
   margin: 1rem 0;
 `;
-
 const Input = styled.input`
   width: 39rem;
   height: 3.5rem;
   border: 1px solid black;
   padding-left: 1rem;
 `;
-
 const Button = styled.button`
   border: none;
   width: 40rem;
@@ -167,12 +162,24 @@ const Button = styled.button`
     background-color: #006097;
   }
 `;
-
+const StudentButton = styled(Button)`
+  background-color: transparent;
+  color: #0073b1;
+  &:hover {
+    background-color: rgba(152, 216, 244, 0.25);
+    color: #006097;
+  }
+`;
+const IndustryDes = styled(InfoDescription)`
+  display: ${props => (props.show ? "flex" : "none")};
+`;
+const IndustryInput = styled(Input)`
+  display: ${props => (props.show ? "flex" : "none")};
+`;
 const ProgressDiv = styled.div`
   display: flex;
-  margin-bottom: 5rem;
+  margin-top: 8rem;
 `;
-
 const ProgressPoint = styled.div`
   padding: 0.3rem;
   display: flex;
@@ -183,7 +190,6 @@ const ProgressPoint = styled.div`
   font-weight: normal;
   position: relative;
 `;
-
 const ProgressText = styled.span`
   width: 6.5rem;
   text-align: center;
@@ -194,7 +200,6 @@ const ProgressText = styled.span`
       ? "black"
       : "rgba(0,0,0, 0.6)"};
 `;
-
 const ProgressPointCircle = styled.div`
   width: 0.8rem;
   height: 0.8rem;
@@ -213,7 +218,6 @@ const ProgressPointCircle = styled.div`
         ? "#0073b1"
         : "rgba(0,0,0, 0.6)"};
 `;
-
 const ProgressLine = styled.div`
   height: 0.2rem;
   width: 5rem;

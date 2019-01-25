@@ -14,6 +14,11 @@ import {
   USER_LOCATION_UPDATED,
   USER_LOCATION_UPDATE_ERROR
 } from "./Login.actions";
+import {
+  UPDATING_USER_JOB,
+  USER_JOB_UPDATED,
+  USER_JOB_UPDATE_ERROR
+} from "./Login.actions";
 
 let originalState = {
   userDoneTutorial: false,
@@ -87,6 +92,26 @@ export default (state = originalState, action) => {
       return {
         ...state,
         userLocationUpdated: action.payload
+      };
+
+    //User Job Update//
+    case UPDATING_USER_JOB:
+      return {
+        ...state,
+        userJobUpdated: false
+      };
+
+    case USER_JOB_UPDATED:
+      return {
+        ...state,
+        userJobUpdated: true,
+        user: action.payload.selectedUserUpdate
+      };
+
+    case USER_JOB_UPDATE_ERROR:
+      return {
+        ...state,
+        userJobUpdated: action.payload
       };
 
     default:

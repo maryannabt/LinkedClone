@@ -14,6 +14,10 @@ export const UPDATING_USER_LOCATION = "UPDATING_USER_LOCATION";
 export const USER_LOCATION_UPDATED = "USER_LOCATION_UPDATED";
 export const USER_LOCATION_UPDATE_ERROR = "USER_LOCATION_UPDATE_ERROR";
 
+export const UPDATING_USER_JOB = "UPDATING_USER_JOB";
+export const USER_JOB_UPDATED = "USER_JOB_UPDATED";
+export const USER_JOB_UPDATE_ERROR = "USER_JOB_UPDATE_ERROR";
+
 export const verifyToken = token => {
   return function(dispatch) {
     dispatch({ type: VERIFY_TOKEN });
@@ -97,6 +101,35 @@ export const updateUserLocation = userData => {
       .catch(err =>
         dispatch({
           type: USER_LOCATION_UPDATE_ERROR,
+          payload: err
+        })
+      );
+  };
+};
+
+export const updateUserJob = userData => {
+  return function(dispatch) {
+    dispatch({ type: UPDATING_USER_JOB });
+
+    return fetch(`/api/auth/update/${userData.id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        ...userData
+      })
+    })
+      .then(res => res.json())
+      .then(res =>
+        dispatch({
+          type: USER_JOB_UPDATED,
+          payload: res
+        })
+      )
+      .catch(err =>
+        dispatch({
+          type: USER_JOB_UPDATE_ERROR,
           payload: err
         })
       );
