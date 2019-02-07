@@ -19,6 +19,16 @@ import {
   USER_JOB_UPDATED,
   USER_JOB_UPDATE_ERROR
 } from "./Login.actions";
+import {
+  FINISH_TUTORIAL,
+  FINISH_TUTORIAL_OK,
+  FINISH_TUTORIAL_ERROR
+} from "./Login.actions";
+import {
+  FINISH_TUTORIAL_NO_AVATAR,
+  FINISH_TUTORIAL_NO_AVATAR_OK,
+  FINISH_TUTORIAL_NO_AVATAR_ERROR
+} from "./Login.actions";
 
 let originalState = {
   userDoneTutorial: false,
@@ -31,7 +41,6 @@ let originalState = {
 
 export default (state = originalState, action) => {
   switch (action.type) {
-    //Loging In//
     case VERIFY_TOKEN:
       return { ...state, loginErrMsg: null };
 
@@ -48,7 +57,7 @@ export default (state = originalState, action) => {
         err: action.payload.err
       };
 
-    //Creare new User//
+    // Create new user
     case CREATING_NEW_USER:
       return { ...state };
 
@@ -74,7 +83,7 @@ export default (state = originalState, action) => {
         errorMsg: null
       };
 
-    //User Location Update//
+    // User location update
     case UPDATING_USER_LOCATION:
       return {
         ...state,
@@ -94,7 +103,7 @@ export default (state = originalState, action) => {
         userLocationUpdated: action.payload
       };
 
-    //User Job Update//
+    //User job update
     case UPDATING_USER_JOB:
       return {
         ...state,
@@ -112,6 +121,38 @@ export default (state = originalState, action) => {
       return {
         ...state,
         userJobUpdated: action.payload
+      };
+
+    //Tutorial done with avatar
+    case FINISH_TUTORIAL:
+      return { ...state };
+
+    case FINISH_TUTORIAL_OK:
+      return {
+        ...state,
+        user: action.payload.selectedUserUpdate
+      };
+
+    case FINISH_TUTORIAL_ERROR:
+      return {
+        ...state,
+        err: action.payload.err
+      };
+
+    //Tutorial done without avatar
+    case FINISH_TUTORIAL_NO_AVATAR:
+      return { ...state };
+
+    case FINISH_TUTORIAL_NO_AVATAR_OK:
+      return {
+        ...state,
+        user: action.payload.selectedUserUpdate
+      };
+
+    case FINISH_TUTORIAL_NO_AVATAR_ERROR:
+      return {
+        ...state,
+        err: action.payload.err
       };
 
     default:

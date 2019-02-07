@@ -18,6 +18,15 @@ export const UPDATING_USER_JOB = "UPDATING_USER_JOB";
 export const USER_JOB_UPDATED = "USER_JOB_UPDATED";
 export const USER_JOB_UPDATE_ERROR = "USER_JOB_UPDATE_ERROR";
 
+export const FINISH_TUTORIAL = "FINISH_TUTORIAL";
+export const FINISH_TUTORIAL_OK = "FINISH_TUTORIAL_OK";
+export const FINISH_TUTORIAL_ERROR = "FINISH_TUTORIAL_ERROR";
+
+export const FINISH_TUTORIAL_NO_AVATAR = "FINISH_TUTORIAL_NO_AVATAR";
+export const FINISH_TUTORIAL_NO_AVATAR_OK = "FINISH_TUTORIAL_NO_AVATAR_OK";
+export const FINISH_TUTORIAL_NO_AVATAR_ERROR =
+  "FINISH_TUTORIAL_NO_AVATAR_ERROR";
+
 export const verifyToken = token => {
   return function(dispatch) {
     dispatch({ type: VERIFY_TOKEN });
@@ -130,6 +139,57 @@ export const updateUserJob = userData => {
       .catch(err =>
         dispatch({
           type: USER_JOB_UPDATE_ERROR,
+          payload: err
+        })
+      );
+  };
+};
+
+// Finish Login Stage 3 + Finish Tutorial
+export const finishTutorial = (fileData, userID) => {
+  return function(dispatch) {
+    dispatch({ type: FINISH_TUTORIAL });
+
+    return fetch(`/api/user/finish/${userID}`, {
+      method: "POST",
+      // headers: {
+      //   "Content-Type": "multipart/form-data"
+      // },
+      body: fileData
+    })
+      .then(res => res.json())
+      .then(res =>
+        dispatch({
+          type: FINISH_TUTORIAL_OK,
+          payload: res
+        })
+      )
+      .catch(err =>
+        dispatch({
+          type: FINISH_TUTORIAL_ERROR,
+          payload: err
+        })
+      );
+  };
+};
+
+export const finishTutorialNoAvatar = userID => {
+  return function(dispatch) {
+    dispatch({ type: FINISH_TUTORIAL_NO_AVATAR });
+
+    return fetch(`/api/user/finish/noavatar/${userID}`, {
+      method: "POST"
+    })
+      .then(res => res.json())
+      .then(res =>
+        dispatch({
+          type: FINISH_TUTORIAL_NO_AVATAR_OK,
+          payload: res
+        })
+      )
+      .catch(err =>
+        dispatch({
+          type: FINISH_TUTORIAL_NO_AVATAR_ERROR,
           payload: err
         })
       );

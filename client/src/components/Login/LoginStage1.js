@@ -7,7 +7,7 @@ import { CountryDropdown } from "react-country-region-selector";
 import { connect } from "react-redux";
 import { flexbox } from "../../utils/utils";
 
-//Actions//
+// Actions
 import { updateUserLocation } from "./LoginReducer/Login.actions";
 
 class LoginStage1 extends Component {
@@ -82,7 +82,7 @@ class LoginStage1 extends Component {
   }
 }
 
-// Redux //
+// Redux
 function mapStateToProps(state) {
   const { loginData } = state;
 
@@ -100,7 +100,7 @@ export default connect(
   mapDispatchToProps
 )(LoginStage1);
 
-//CSS//
+// CSS
 const CountryInput = {
   width: "40.1rem",
   height: "3.5rem",
@@ -218,11 +218,7 @@ const ProgressLine = styled.div`
   height: 0.2rem;
   width: 5rem;
   background-color: ${props =>
-    props.status === "done"
-      ? "black"
-      : props.status === "rgba(0,0,0, 0.2)"
-      ? "transparent"
-      : "rgba(0,0,0, 0.2)"};
+    props.status === "done" ? "black" : "rgba(0,0,0, 0.2)"};
   border-radius: 0.2rem;
   position: absolute;
   top: 0.5rem;

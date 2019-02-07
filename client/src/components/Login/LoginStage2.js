@@ -5,7 +5,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 
-//Actions//
+// Actions
 import { updateUserJob } from "./LoginReducer/Login.actions";
 
 class LoginStage2 extends Component {
@@ -90,7 +90,7 @@ class LoginStage2 extends Component {
   }
 }
 
-//Redux
+// Redux
 function mapStateToProps(state) {
   const { loginData } = state;
 
@@ -108,7 +108,7 @@ export default connect(
   mapDispatchToProps
 )(LoginStage2);
 
-//CSS//
+// CSS
 const Wrapper = styled.div`
   width: 100%;
   height: 62.4rem;
@@ -222,11 +222,7 @@ const ProgressLine = styled.div`
   height: 0.2rem;
   width: 5rem;
   background-color: ${props =>
-    props.status === "done"
-      ? "black"
-      : props.status === "rgba(0,0,0, 0.2)"
-      ? "transparent"
-      : "rgba(0,0,0, 0.2)"};
+    props.status === "done" ? "black" : "rgba(0,0,0, 0.2)"};
   border-radius: 0.2rem;
   position: absolute;
   top: 0.5rem;

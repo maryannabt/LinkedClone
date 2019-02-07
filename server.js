@@ -23,7 +23,7 @@ app.get("/api", (req, res) => {
 
 // Actual routing
 app.use("/api/auth", authRouter);
-// app.use("/api/user", userRouter);
+app.use("/api/user", userRouter);
 
 app.use("/api/profile", profile);
 app.use("/api/posts", posts);
