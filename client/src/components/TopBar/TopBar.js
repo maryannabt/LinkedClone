@@ -45,6 +45,7 @@ function mapStateToProps(state) {
     loginData
   };
 }
+
 function mapDispatchToProps(dispatch) {
   return {
     loginUser: userData => dispatch(loginUser(userData))

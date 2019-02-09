@@ -34,6 +34,7 @@ import {
   LOGGING_IN_SUCCESSFULLY,
   LOGGING_IN_ERROR
 } from "./Login.actions";
+import { CLEAR_LOGIN_ERROR } from "./Login.actions";
 
 let originalState = {
   userDoneTutorial: false,
@@ -183,6 +184,9 @@ export default (state = originalState, action) => {
         ...state,
         error: action.payload
       };
+
+    case CLEAR_LOGIN_ERROR:
+      return { ...state, loginErrMsg: null, sentData: null };
 
     default:
       return state;
