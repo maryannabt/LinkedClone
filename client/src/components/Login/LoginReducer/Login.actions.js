@@ -27,6 +27,10 @@ export const FINISH_TUTORIAL_NO_AVATAR_OK = "FINISH_TUTORIAL_NO_AVATAR_OK";
 export const FINISH_TUTORIAL_NO_AVATAR_ERROR =
   "FINISH_TUTORIAL_NO_AVATAR_ERROR";
 
+export const LOGGING_IN = "LOGGING_IN";
+export const LOGGING_IN_SUCCESSFULLY = "LOGGING_IN_SUCCESSFULLY";
+export const LOGGING_IN_ERROR = "LOGGING_IN_ERROR";
+
 export const verifyToken = token => {
   return function(dispatch) {
     dispatch({ type: VERIFY_TOKEN });
@@ -190,6 +194,36 @@ export const finishTutorialNoAvatar = userID => {
       .catch(err =>
         dispatch({
           type: FINISH_TUTORIAL_NO_AVATAR_ERROR,
+          payload: err
+        })
+      );
+  };
+};
+
+// Login
+export const loginUser = userData => {
+  return function(dispatch) {
+    dispatch({ type: LOGGING_IN });
+
+    return fetch("/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        ...userData
+      })
+    })
+      .then(res => res.json())
+      .then(res =>
+        dispatch({
+          type: LOGGING_IN_SUCCESSFULLY,
+          payload: res
+        })
+      )
+      .catch(err =>
+        dispatch({
+          type: LOGGING_IN_ERROR,
           payload: err
         })
       );

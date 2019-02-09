@@ -28,7 +28,7 @@ class App extends Component {
 
 export default App;
 
-//CSS//
+// CSS
 const Wrapper = styled.div`
   display: flex;
   flex-basis: 100%;

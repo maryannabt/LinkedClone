@@ -29,6 +29,11 @@ import {
   FINISH_TUTORIAL_NO_AVATAR_OK,
   FINISH_TUTORIAL_NO_AVATAR_ERROR
 } from "./Login.actions";
+import {
+  LOGGING_IN,
+  LOGGING_IN_SUCCESSFULLY,
+  LOGGING_IN_ERROR
+} from "./Login.actions";
 
 let originalState = {
   userDoneTutorial: false,
@@ -103,7 +108,7 @@ export default (state = originalState, action) => {
         userLocationUpdated: action.payload
       };
 
-    //User job update
+    // User job update
     case UPDATING_USER_JOB:
       return {
         ...state,
@@ -123,36 +128,60 @@ export default (state = originalState, action) => {
         userJobUpdated: action.payload
       };
 
-    //Tutorial done with avatar
+    // Tutorial done with avatar
     case FINISH_TUTORIAL:
-      return { ...state };
+      return { ...state, userDoneTutorial: false };
 
     case FINISH_TUTORIAL_OK:
       return {
         ...state,
+        userDoneTutorial: true,
         user: action.payload.selectedUserUpdate
       };
 
     case FINISH_TUTORIAL_ERROR:
       return {
         ...state,
-        err: action.payload.err
+        userDoneTutorial: action.payload
       };
 
-    //Tutorial done without avatar
+    // Tutorial done without avatar
     case FINISH_TUTORIAL_NO_AVATAR:
-      return { ...state };
+      return { ...state, userDoneTutorial: false };
 
     case FINISH_TUTORIAL_NO_AVATAR_OK:
       return {
         ...state,
+        userDoneTutorial: true,
         user: action.payload.selectedUserUpdate
       };
 
     case FINISH_TUTORIAL_NO_AVATAR_ERROR:
       return {
         ...state,
-        err: action.payload.err
+        userDoneTutorial: action.payload
+      };
+
+    // Logging In
+    case LOGGING_IN:
+      return {
+        ...state
+      };
+
+    case LOGGING_IN_SUCCESSFULLY:
+      return {
+        ...state,
+        auth: action.payload.auth,
+        token: action.payload.token,
+        user: action.payload.user,
+        loginErrMsg: action.payload.message,
+        sentData: action.payload.sentData
+      };
+
+    case LOGGING_IN_ERROR:
+      return {
+        ...state,
+        error: action.payload
       };
 
     default:

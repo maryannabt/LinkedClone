@@ -20,7 +20,7 @@ class TutorialTopBar extends Component {
 
 export default withRouter(TutorialTopBar);
 
-//CSS//
+// CSS
 const Main = styled.div`
   display: flex;
   width: 100%;

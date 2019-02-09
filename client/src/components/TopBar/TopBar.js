@@ -5,11 +5,13 @@ import styled from "styled-components";
 import LoginTopBar from "./LoginTopBar";
 import TutorialTopBar from "./TutorialTopBar";
 import { connect } from "react-redux";
+import { loginUser } from "../Login/LoginReducer/Login.actions";
 import { withRouter } from "react-router-dom";
 
 class TopBar extends Component {
   render() {
-    const { auth } = this.props.loginData;
+    const { auth, loginErrMsg } = this.props.loginData;
+    const { loginUser } = this.props;
 
     if (auth) {
       return (
@@ -18,16 +20,25 @@ class TopBar extends Component {
         </Wrapper>
       );
     } else {
-      return (
-        <Wrapper>
-          <LoginTopBar />
-        </Wrapper>
-      );
+      if (!loginErrMsg) {
+        return (
+          <Wrapper loged={auth}>
+            <LoginTopBar loginUser={loginUser} />
+          </Wrapper>
+        );
+      } else {
+        // If there was an error logging in
+        return (
+          <Wrapper loged={auth}>
+            <TutorialTopBar />
+          </Wrapper>
+        );
+      }
     }
   }
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   const { loginData } = state;
 
   return {
@@ -35,7 +46,9 @@ function mapStateToProps(state, ownProps) {
   };
 }
 function mapDispatchToProps(dispatch) {
-  return {};
+  return {
+    loginUser: userData => dispatch(loginUser(userData))
+  };
 }
 
 export default withRouter(
@@ -45,7 +58,7 @@ export default withRouter(
   )(TopBar)
 );
 
-//CSS//
+// CSS
 const Wrapper = styled.div`
   position: ${props => (props.loged ? "fixed" : "absolute")};
   background-color: #283e4a;

@@ -5,9 +5,9 @@ import styled from "styled-components";
 import LoginForm from "./LoginForm";
 import LoginBottom from "./LoginBottom";
 import { flexbox } from "../../utils/utils";
-
-//Actions//
 import { connect } from "react-redux";
+
+// Actions
 import {
   createNewUser,
   clearLoginFormErrMsg
@@ -16,10 +16,17 @@ import {
 class Login extends Component {
   render() {
     const { createNewUser, clearLoginFormErrMsg } = this.props;
-    const { auth, user, errorMsg } = this.props.loginData;
+    const { auth, user, errorMsg, loginErrMsg } = this.props.loginData;
 
+    if (auth && user.registrationWizard === "done") {
+      this.props.history.push("/feed");
+      console.log("Ridirected from Login to Feed");
+    }
     if (auth && user.registrationWizard !== "done") {
       this.props.history.push("/start/location");
+    }
+    if (loginErrMsg === "201" || loginErrMsg === "202") {
+      this.props.history.push("/login");
     }
 
     return (
@@ -35,7 +42,7 @@ class Login extends Component {
   }
 }
 
-//Redux//
+// Redux
 function mapStateToProps(state) {
   const { loginData } = state;
 
@@ -56,7 +63,7 @@ export default connect(
   mapDispatchToProps
 )(Login);
 
-//CSS//
+// CSS
 const Wrapper = styled.div`
   ${flexbox({ d: "column" })}
   width: 100%;

@@ -10,7 +10,6 @@ const User = require("../../models/User");
 
 // Load Input Validation
 const validateRegisterInput = require("../../validation/register");
-const validateLoginInput = require("../../validation/login");
 
 const {
   verify_token,
@@ -66,13 +65,6 @@ router.post(
 router.post(
   "/login",
   asm(async (req, res) => {
-    const { errors, isValid } = validateLoginInput(req.body);
-
-    // Check Validation
-    if (!isValid) {
-      return res.status(400).json(errors);
-    }
-
     // Extract from req.body the credentials the user entered
     const { email, password } = req.body;
 
@@ -80,11 +72,21 @@ router.post(
     const user = await User.findOne({ email });
 
     // If no user found...
-    if (!user) return res.status(401).json(false_response);
+    if (!user)
+      return res.status(401).json({
+        ...false_response,
+        message: "201",
+        sentData: req.body
+      });
 
     // Check if the password is valid
     const password_is_valid = await bcrypt.compare(password, user.password);
-    if (!password_is_valid) return res.status(401).json(false_response);
+    if (!password_is_valid)
+      return res.status(401).json({
+        ...false_response,
+        message: "202",
+        sentData: req.body
+      });
 
     // If user is found and password is valid
     // Create a fresh new token
@@ -93,7 +95,9 @@ router.post(
     // Return the information including token as JSON
     return res.status(200).json({
       auth: true,
-      token
+      token,
+      user,
+      message: "269"
     });
   })
 );

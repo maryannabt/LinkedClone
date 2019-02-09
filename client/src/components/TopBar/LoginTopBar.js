@@ -1,4 +1,5 @@
-/* Rendered in TopBar component which is connected to the redux store. */
+/* Rendered in TopBar component which is connected to the redux store.
+   Props: loginUser - action dispatcher for logging in a user, takes in user data as an argument. */
 
 import React, { Component } from "react";
 import styled from "styled-components";
@@ -29,7 +30,7 @@ class LoginTopBar extends Component {
     return (
       <Main>
         <Logo>
-          <Img src={LogoImg} />
+          <Img src={LogoImg} onClick={() => this.props.history.push("/")} />
         </Logo>
         <Login>
           <Form>
@@ -58,7 +59,7 @@ class LoginTopBar extends Component {
 
 export default withRouter(LoginTopBar);
 
-//CSS//
+// CSS
 const Main = styled.div`
   display: flex;
   width: 100%;
@@ -88,6 +89,7 @@ const Login = styled.div`
 const Img = styled.img`
   width: 11.1rem;
   height: 2.8rem;
+  cursor: pointer;
   /* margin-left: 10.5rem; */
 
   @media only screen and (max-width: 580px) {
