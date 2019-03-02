@@ -2,24 +2,13 @@ import React from "react";
 import styled from "styled-components";
 
 const Loader = () => {
-  return (
-    <Wrapper>
-      <Out />
-      <In> </In>
-    </Wrapper>
-  );
+  return <Spinner />;
 };
 
 export default Loader;
 
 // CSS
-const Wrapper = styled.div`
-  position: absolute;
-  top: 50%;
-  right: 50%;
-`;
-
-const Out = styled.div`
+const Spinner = styled.div`
   border: 0.15rem solid #f3f3f3;
   border-top: 0.15rem solid #3498db;
   width: 2rem;
@@ -39,5 +28,3 @@ const Out = styled.div`
     }
   }
 `;
-
-const In = styled.div``;

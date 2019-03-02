@@ -33,6 +33,8 @@ export const LOGGING_IN_ERROR = "LOGGING_IN_ERROR";
 
 export const CLEAR_LOGIN_ERROR = "CLEAR_LOGIN_ERROR";
 
+export const LOG_USER_OUT = "LOG_USER_OUT";
+
 export const verifyToken = token => {
   return function(dispatch) {
     dispatch({ type: VERIFY_TOKEN });
@@ -233,3 +235,5 @@ export const loginUser = userData => {
 };
 
 export const clearLoginError = () => ({ type: CLEAR_LOGIN_ERROR });
+
+export const logUserOut = () => ({ type: LOG_USER_OUT });

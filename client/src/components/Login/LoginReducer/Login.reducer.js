@@ -35,6 +35,7 @@ import {
   LOGGING_IN_ERROR
 } from "./Login.actions";
 import { CLEAR_LOGIN_ERROR } from "./Login.actions";
+import { LOG_USER_OUT } from "./Login.actions";
 
 let originalState = {
   userDoneTutorial: false,
@@ -187,6 +188,15 @@ export default (state = originalState, action) => {
 
     case CLEAR_LOGIN_ERROR:
       return { ...state, loginErrMsg: null, sentData: null };
+
+    // Log Out
+    case LOG_USER_OUT:
+      return {
+        auth: false,
+        token: null,
+        user: null,
+        loginErrMsg: null
+      };
 
     default:
       return state;
