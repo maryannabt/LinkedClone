@@ -1,7 +1,7 @@
 /* Rendered in Login component which is connected to the redux store.
    Props: createNewUser - action dispatcher for creating a user, takes in user data as an argument.
           clearLoginFormErrMsg - action dispatcher for clearing the errors that came from the back end server (errorMsg).
-          errorMsg - value derived from the state as a result of loginData reducer operation. */
+          errorMsg - value derived from the redux store state as a result of loginData reducer operation. */
 
 import React, { Component } from "react";
 import styled from "styled-components";

@@ -76,4 +76,37 @@ router.post(
   })
 );
 
+// If there is a search string - get 10 last created users that match the search request (filtering by first or last name) for search result
+// If the search string is empty - get 10 last created users (except for the logged in user) for search result
+router.get(
+  "/search/:id",
+  asm(async (req, res) => {
+    try {
+      if (req.query.search !== "") {
+        const searchSuggestions = await User.find({
+          _id: { $ne: req.params.id },
+          $or: [
+            { first_name: { $regex: req.query.search, $options: "i" } },
+            { last_name: { $regex: req.query.search, $options: "i" } }
+          ]
+        })
+          .sort({ createdAt: -1 })
+          .limit(10);
+
+        return res.json(searchSuggestions);
+      } else {
+        const searchSuggestions = await User.find({
+          _id: { $ne: req.params.id }
+        })
+          .sort({ createdAt: -1 })
+          .limit(10);
+        return res.json(searchSuggestions);
+      }
+    } catch (err) {
+      console.log("Your Error is: ", err);
+      return res.json(err);
+    }
+  })
+);
+
 module.exports = router;
