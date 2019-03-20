@@ -3,10 +3,11 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import Search from "./Search";
+import Links from "./Links";
 import LoginTopBar from "./LoginTopBar";
 import TutorialTopBar from "./TutorialTopBar";
 import { connect } from "react-redux";
-import { loginUser } from "../Login/LoginReducer/Login.actions";
+import { loginUser, logUserOut } from "../Login/LoginReducer/Login.actions";
 import { fetchSearchResults } from "../MainRail/FeedReducer/Feed.actions";
 import { withRouter } from "react-router-dom";
 
@@ -14,7 +15,7 @@ class TopBar extends Component {
   render() {
     const { auth, user, loginErrMsg } = this.props.loginData;
     const { searchSuggestions } = this.props.feedData;
-    const { loginUser, fetchSearchResults } = this.props;
+    const { loginUser, logUserOut, fetchSearchResults } = this.props;
 
     if (auth) {
       if (user.registrationWizard === "done") {
@@ -24,6 +25,11 @@ class TopBar extends Component {
               fetchSearchResults={fetchSearchResults}
               userID={user._id}
               searchSuggestions={searchSuggestions}
+            />
+            <Links
+              user={user}
+              logUserOut={logUserOut}
+              activePage={this.props.location.pathname}
             />
           </LogedWrapper>
         );
@@ -65,6 +71,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     loginUser: userData => dispatch(loginUser(userData)),
+    logUserOut: () => dispatch(logUserOut()),
     fetchSearchResults: (userID, searchStr) =>
       dispatch(fetchSearchResults(userID, searchStr))
   };
