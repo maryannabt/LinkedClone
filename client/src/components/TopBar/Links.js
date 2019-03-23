@@ -1,3 +1,9 @@
+/* Rendered in TopBar component which is connected to the redux store.
+   Props: user - currently logged in user. Value derived from the redux store state as a result of loginData reducer operation.
+          logUserOut - action dispatcher for logging out the current user.
+          activePage - a prop provided by react-router-dom. this.props.location.pathname provides us with the path of the URL of the
+          current route of the application. */
+
 import React, { Component } from "react";
 import styled from "styled-components";
 import Menu from "./Menu";
@@ -66,7 +72,10 @@ class Links extends Component {
           <LinkText>Notifications</LinkText>
         </LinkDiv>
 
-        <LinkMe onClick={this.displayMenu.bind(this)}>
+        <LinkMe
+          onClick={this.displayMenu.bind(this)}
+          ref={ClickMeRef => (this.ClickMeRef = ClickMeRef)}
+        >
           <img src={user.avatar} alt="User avatar" />
           <LinkTextMe>
             Me <i class="fas fa-sort-down" />
@@ -76,8 +85,8 @@ class Links extends Component {
         {this.state.showMenu && (
           <Menu
             user={user}
-            show={this.state.showMenu}
             hideMenu={this.hideMenu.bind(this)}
+            ClickMeRef={this.ClickMeRef}
             logUserOut={logUserOut}
           />
         )}
