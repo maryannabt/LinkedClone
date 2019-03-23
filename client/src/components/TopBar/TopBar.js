@@ -4,6 +4,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import Search from "./Search";
 import Links from "./Links";
+import Work from "./Work";
 import LoginTopBar from "./LoginTopBar";
 import TutorialTopBar from "./TutorialTopBar";
 import { connect } from "react-redux";
@@ -31,6 +32,7 @@ class TopBar extends Component {
               logUserOut={logUserOut}
               activePage={this.props.location.pathname}
             />
+            <Work />
           </LogedWrapper>
         );
       } else {
