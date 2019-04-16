@@ -10,6 +10,7 @@ router.use(express.json());
 
 // Load Models
 const User = require("../../models/User");
+const Post = require("../../models/Post");
 
 // Multer allows access to files submitted through the form. We need a route to catch the data from the file form.
 // Multer automatically handles the file upload and puts the file in the "/tmp/uploads" directory that we set in the "upload" middleware.
@@ -105,6 +106,53 @@ router.get(
     } catch (err) {
       console.log("Your Error is: ", err);
       return res.json(err);
+    }
+  })
+);
+
+// Create new Post
+
+router.post(
+  "/create/post",
+  upload.single("img"),
+  asm(async (req, res) => {
+    try {
+      let body = JSON.parse(req.body.text);
+
+      if (req.file) {
+        let result = await cloudinary.v2.uploader.upload(req.file.path);
+        const post = new Post({ ...body, img: result.url });
+        await post.save();
+        let postAuthUser = await User.findById(body.userID).lean();
+        let postInfo = await Post.findById(post._id).lean();
+        let newPost = {
+          likes: [],
+          comments: [],
+          postAuthUser,
+          ...postInfo
+        };
+        return res.json({
+          postSaved: true,
+          post: newPost
+        });
+      } else {
+        const post = new Post(body);
+        await post.save();
+        let postAuthUser = await User.findById(body.userID).lean();
+        let postInfo = await Post.findById(post._id).lean();
+        let newPost = {
+          likes: [],
+          comments: [],
+          postAuthUser,
+          ...postInfo
+        };
+        return res.json({
+          postSaved: true,
+          post: newPost
+        });
+      }
+    } catch (err) {
+      console.log("New Error: ", err);
     }
   })
 );
