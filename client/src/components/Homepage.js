@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import MainRail from "./MainRail/MainRail";
-import { withRouter } from "react-router";
 
 class Homepage extends Component {
   render() {
@@ -13,7 +12,7 @@ class Homepage extends Component {
   }
 }
 
-export default withRouter(Homepage);
+export default Homepage;
 
 // CSS
 const Wrapper = styled.div`

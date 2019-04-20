@@ -8,9 +8,6 @@ const db = require("./db/mongoose.connection");
 const authRouter = require("./routes/api/auth.router");
 const userRouter = require("./routes/api/user.router");
 
-const profile = require("./routes/api/profile");
-const posts = require("./routes/api/posts");
-
 const { NODE_ENV, API_PORT, API_HOST } = process.env;
 
 const app = express();
@@ -24,9 +21,6 @@ app.get("/api", (req, res) => {
 // Actual routing
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
-
-app.use("/api/profile", profile);
-app.use("/api/posts", posts);
 
 // Central error handling
 app.use((err, req, res, next) => {
