@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import NewPost from "./NewPost";
+import Sort from "./Sort";
 import { connect } from "react-redux";
 import { uploadPost, removePostMsg } from "./FeedReducer/Feed.actions";
 
@@ -23,6 +24,7 @@ class MainRail extends Component {
           postSaved={postSaved}
           removePostMsg={removePostMsg}
         />
+        <Sort />
       </Main>
     );
   }
