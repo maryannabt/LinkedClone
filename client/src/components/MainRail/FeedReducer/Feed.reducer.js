@@ -14,6 +14,7 @@ import {
   POSTS_FETCHED_OK,
   POSTS_FETCHED_ERROR
 } from "./Feed.actions";
+import { REMOVE_POST_ARR } from "./Feed.actions";
 
 let originalState = {
   posts: [],
@@ -75,6 +76,13 @@ export default (state = originalState, action) => {
       return {
         ...state,
         err: action.payload.err
+      };
+
+    case REMOVE_POST_ARR:
+      return {
+        ...state,
+        posts: [],
+        postOffSet: 0
       };
 
     default:

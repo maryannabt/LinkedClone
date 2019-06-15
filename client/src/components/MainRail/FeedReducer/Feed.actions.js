@@ -14,6 +14,8 @@ export const FETCHING_POSTS = "FETCHING_POSTS";
 export const POSTS_FETCHED_OK = "POSTS_FETCHED_OK";
 export const POSTS_FETCHED_ERROR = "POSTS_FETCHED_ERROR";
 
+export const REMOVE_POST_ARR = "REMOVE_POST_ARR";
+
 export const fetchSearchResults = (userID, searchStr) => {
   return function(dispatch) {
     dispatch({ type: FETCHING_SEARCH_RESULTS });
@@ -88,3 +90,5 @@ export const fetchPosts = (userID, offSet) => {
       );
   };
 };
+
+export const removePosts = () => ({ type: REMOVE_POST_ARR });
