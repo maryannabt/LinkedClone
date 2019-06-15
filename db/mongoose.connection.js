@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+mongoose.Promise = require("bluebird");
 
 /* const { DB_HOST, DB_PORT, DB_NAME } = process.env; */
 
@@ -25,10 +26,7 @@ const options = {
 
 const connect = async () => {
   try {
-    await mongoose.connect(
-      uri,
-      options
-    );
+    await mongoose.connect(uri, options);
     console.log("Connected to Mongo DB");
   } catch (error) {
     console.error(error);

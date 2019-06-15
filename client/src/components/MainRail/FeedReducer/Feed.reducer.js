@@ -9,6 +9,11 @@ import {
   NEW_POST_ERROR
 } from "./Feed.actions";
 import { REMOVE_POST_MSG } from "./Feed.actions";
+import {
+  FETCHING_POSTS,
+  POSTS_FETCHED_OK,
+  POSTS_FETCHED_ERROR
+} from "./Feed.actions";
 
 let originalState = {
   posts: [],
@@ -50,6 +55,26 @@ export default (state = originalState, action) => {
       return {
         ...state,
         postSaved: null
+      };
+
+    case FETCHING_POSTS:
+      return {
+        ...state,
+        fetchingPosts: true
+      };
+
+    case POSTS_FETCHED_OK:
+      return {
+        ...state,
+        posts: [...state.posts, ...action.payload],
+        fetchingPosts: false,
+        postOffSet: state.postOffSet + 10
+      };
+
+    case POSTS_FETCHED_ERROR:
+      return {
+        ...state,
+        err: action.payload.err
       };
 
     default:

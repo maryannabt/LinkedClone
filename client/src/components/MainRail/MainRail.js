@@ -3,9 +3,29 @@ import styled from "styled-components";
 import NewPost from "./NewPost";
 import Sort from "./Sort";
 import { connect } from "react-redux";
-import { uploadPost, removePostMsg } from "./FeedReducer/Feed.actions";
+import {
+  uploadPost,
+  removePostMsg,
+  fetchPosts,
+  removePosts
+} from "./FeedReducer/Feed.actions";
 
 class MainRail extends Component {
+  getPosts = () => {
+    this.props.fetchPosts(
+      this.props.loginData.user._id,
+      this.props.feedData.postOffSet
+    );
+  };
+
+  componentDidMount() {
+    this.getPosts();
+  }
+
+  componentWillUnmount() {
+    this.props.removePosts();
+  }
+
   render() {
     const { auth, user } = this.props.loginData;
     const { uploadPost, removePostMsg } = this.props;
@@ -42,7 +62,9 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     uploadPost: postData => dispatch(uploadPost(postData)),
-    removePostMsg: () => dispatch(removePostMsg())
+    removePostMsg: () => dispatch(removePostMsg()),
+    fetchPosts: (userID, offSet) => dispatch(fetchPosts(userID, offSet)),
+    removePosts: () => dispatch(removePosts())
   };
 }
 

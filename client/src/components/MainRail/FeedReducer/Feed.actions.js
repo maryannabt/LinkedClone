@@ -10,6 +10,10 @@ export const NEW_POST_ERROR = "NEW_POST_ERROR";
 
 export const REMOVE_POST_MSG = "REMOVE_POST_MSG";
 
+export const FETCHING_POSTS = "FETCHING_POSTS";
+export const POSTS_FETCHED_OK = "POSTS_FETCHED_OK";
+export const POSTS_FETCHED_ERROR = "POSTS_FETCHED_ERROR";
+
 export const fetchSearchResults = (userID, searchStr) => {
   return function(dispatch) {
     dispatch({ type: FETCHING_SEARCH_RESULTS });
@@ -32,7 +36,6 @@ export const fetchSearchResults = (userID, searchStr) => {
 };
 
 // Upload a Post
-
 export const uploadPost = postData => {
   return function(dispatch) {
     dispatch({ type: UPLOADING_NEW_POST });
@@ -58,3 +61,30 @@ export const uploadPost = postData => {
 };
 
 export const removePostMsg = () => ({ type: REMOVE_POST_MSG });
+
+// Fetch Posts
+export const fetchPosts = (userID, offSet) => {
+  return function(dispatch) {
+    dispatch({ type: FETCHING_POSTS });
+
+    return fetch(`/api/user/posts/${userID}?offset=${offSet}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(res => res.json())
+      .then(res =>
+        dispatch({
+          type: POSTS_FETCHED_OK,
+          payload: res
+        })
+      )
+      .catch(err =>
+        dispatch({
+          type: POSTS_FETCHED_ERROR,
+          payload: err
+        })
+      );
+  };
+};

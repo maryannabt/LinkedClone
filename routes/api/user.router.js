@@ -11,6 +11,8 @@ router.use(express.json());
 // Load Models
 const User = require("../../models/User");
 const Post = require("../../models/Post");
+const Like = require("../../models/Like");
+const Comment = require("../../models/Comment");
 
 // Multer allows access to files submitted through the form. We need a route to catch the data from the file form.
 // Multer automatically handles the file upload and puts the file in the "/tmp/uploads" directory that we set in the "upload" middleware.
@@ -111,7 +113,6 @@ router.get(
 );
 
 // Create new Post
-
 router.post(
   "/create/post",
   upload.single("img"),
@@ -153,6 +154,37 @@ router.post(
       }
     } catch (err) {
       console.log("New Error: ", err);
+    }
+  })
+);
+
+// Get 10 posts with their likes and comments, omitting the logged in user's posts
+router.get(
+  "/posts/:id",
+  asm(async (req, res) => {
+    let offSet = parseInt(req.query.offset);
+    try {
+      const posts = await Post.find({ userID: { $ne: req.params.id } })
+        .sort({ createdAt: -1 })
+        .limit(10)
+        .skip(offSet)
+        .lean();
+
+      let newArr = [];
+
+      for (let i = 0; i < posts.length; i++) {
+        let postAuthUser = await User.findById(posts[i].userID);
+        let likes = await Like.find({ targetID: posts[i]._id });
+        let comments = await Comment.find({ targetID: posts[i]._id }).lean();
+        for (let j = 0; j < comments.length; j++) {
+          comments[j].subComments = [];
+        }
+        newArr[i] = { ...posts[i], comments, likes, postAuthUser };
+      }
+      return res.json([...newArr]);
+    } catch (err) {
+      console.log("New Error: ", err);
+      return res.json(err);
     }
   })
 );
