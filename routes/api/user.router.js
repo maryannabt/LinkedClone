@@ -189,4 +189,28 @@ router.get(
   })
 );
 
+// Create new Like
+router.post(
+  "/create/like",
+  asm(async (req, res) => {
+    try {
+      const like = await Like.findOne({
+        targetID: req.body.targetID,
+        userID: req.body.userID
+      });
+      if (like) {
+        await like.delete();
+        return res.json({ likeMsg: "Like Deleted!" });
+      } else {
+        const like = new Like(req.body);
+        await like.save();
+        return res.json({ likeMsg: "Like Saved!" });
+      }
+    } catch (err) {
+      console.log("New Error: ", err);
+      return res.json(err);
+    }
+  })
+);
+
 module.exports = router;

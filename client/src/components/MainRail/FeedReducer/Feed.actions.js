@@ -16,6 +16,10 @@ export const POSTS_FETCHED_ERROR = "POSTS_FETCHED_ERROR";
 
 export const REMOVE_POST_ARR = "REMOVE_POST_ARR";
 
+export const UPLOAD_NEW_LIKE = "UPLOAD_NEW_LIKE";
+export const LIKE_UPLOADED_OK = "LIKE_UPLOADED_OK";
+export const LIKE_UPLOADED_ERROR = "LIKE_UPLOADED_ERROR";
+
 export const fetchSearchResults = (userID, searchStr) => {
   return function(dispatch) {
     dispatch({ type: FETCHING_SEARCH_RESULTS });
@@ -92,3 +96,31 @@ export const fetchPosts = (userID, offSet) => {
 };
 
 export const removePosts = () => ({ type: REMOVE_POST_ARR });
+
+// Create a like
+export const updateLike = likeData => {
+  return function(dispatch) {
+    dispatch({ type: UPLOAD_NEW_LIKE });
+
+    return fetch("/api/user/create/like", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: likeData
+    })
+      .then(res => res.json())
+      .then(res =>
+        dispatch({
+          type: LIKE_UPLOADED_OK,
+          payload: res
+        })
+      )
+      .catch(err =>
+        dispatch({
+          type: LIKE_UPLOADED_ERROR,
+          payload: err
+        })
+      );
+  };
+};

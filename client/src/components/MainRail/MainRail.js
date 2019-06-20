@@ -7,7 +7,8 @@ import {
   uploadPost,
   removePostMsg,
   fetchPosts,
-  removePosts
+  removePosts,
+  updateLike
 } from "./FeedReducer/Feed.actions";
 
 class MainRail extends Component {
@@ -28,7 +29,7 @@ class MainRail extends Component {
 
   render() {
     const { auth, user } = this.props.loginData;
-    const { uploadPost, removePostMsg } = this.props;
+    const { uploadPost, removePostMsg, updateLike } = this.props;
     const { postSaved } = this.props.feedData;
 
     if (!auth) {
@@ -64,7 +65,8 @@ function mapDispatchToProps(dispatch) {
     uploadPost: postData => dispatch(uploadPost(postData)),
     removePostMsg: () => dispatch(removePostMsg()),
     fetchPosts: (userID, offSet) => dispatch(fetchPosts(userID, offSet)),
-    removePosts: () => dispatch(removePosts())
+    removePosts: () => dispatch(removePosts()),
+    updateLike: likeData => dispatch(updateLike(likeData))
   };
 }
 

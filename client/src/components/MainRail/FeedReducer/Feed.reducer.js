@@ -15,6 +15,11 @@ import {
   POSTS_FETCHED_ERROR
 } from "./Feed.actions";
 import { REMOVE_POST_ARR } from "./Feed.actions";
+import {
+  UPLOAD_NEW_LIKE,
+  LIKE_UPLOADED_OK,
+  LIKE_UPLOADED_ERROR
+} from "./Feed.actions";
 
 let originalState = {
   posts: [],
@@ -83,6 +88,22 @@ export default (state = originalState, action) => {
         ...state,
         posts: [],
         postOffSet: 0
+      };
+
+    case UPLOAD_NEW_LIKE:
+      return {
+        ...state
+      };
+
+    case LIKE_UPLOADED_OK:
+      return {
+        ...state
+      };
+
+    case LIKE_UPLOADED_ERROR:
+      return {
+        ...state,
+        err: action.payload.err
       };
 
     default:
