@@ -13,6 +13,7 @@ const User = require("../../models/User");
 const Post = require("../../models/Post");
 const Like = require("../../models/Like");
 const Comment = require("../../models/Comment");
+const Subcomment = require("../../models/Subcomment");
 
 // Multer allows access to files submitted through the form. We need a route to catch the data from the file form.
 // Multer automatically handles the file upload and puts the file in the "/tmp/uploads" directory that we set in the "upload" middleware.
@@ -214,28 +215,58 @@ router.post(
 );
 
 // Create new Comment
-router.post("/create/comment", async (req, res) => {
-  try {
-    const comment = new Comment(req.body);
-    await comment.save();
-    let postAuthUser = await User.findById(req.body.userID).lean();
-    let commentInfo = await Comment.findById(comment._id).lean();
+router.post(
+  "/create/comment",
+  asm(async (req, res) => {
+    try {
+      const comment = new Comment(req.body);
+      await comment.save();
+      let postAuthUser = await User.findById(req.body.userID).lean();
+      let commentInfo = await Comment.findById(comment._id).lean();
 
-    let newComment = {
-      likes: [],
-      subComments: [],
-      userInfo: postAuthUser,
-      ...commentInfo
-    };
+      let newComment = {
+        likes: [],
+        subComments: [],
+        userInfo: postAuthUser,
+        ...commentInfo
+      };
 
-    return res.json({
-      msg: "Comment Saved!",
-      comment: newComment
-    });
-  } catch (err) {
-    console.log("New Error: ", err);
-    return res.json(err);
-  }
-});
+      return res.json({
+        msg: "Comment Saved!",
+        comment: newComment
+      });
+    } catch (err) {
+      console.log("New Error: ", err);
+      return res.json(err);
+    }
+  })
+);
+
+// Create new SubComment
+router.post(
+  "/create/subcomment",
+  asm(async (req, res) => {
+    try {
+      const subComment = new Subcomment(req.body);
+      await subComment.save();
+      let postAuthUser = await User.findById(req.body.userID).lean();
+      let commentInfo = await Subcomment.findById(subComment._id).lean();
+
+      let newComment = {
+        likes: [],
+        subUserInfo: postAuthUser,
+        ...commentInfo
+      };
+
+      return res.json({
+        msg: "Comment Saved!",
+        subcomment: newComment
+      });
+    } catch (err) {
+      console.log("New Error: ", err);
+      return res.json(err);
+    }
+  })
+);
 
 module.exports = router;

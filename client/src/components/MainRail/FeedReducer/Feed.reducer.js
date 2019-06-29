@@ -25,6 +25,11 @@ import {
   COMMENT_UPLOADED_OK,
   COMMENT_UPLOADED_ERROR
 } from "./Feed.actions";
+import {
+  UPLOAD_NEW_SUBCOMMENT,
+  SUBCOMMENT_UPLOADED_OK,
+  SUBCOMMENT_UPLOADED_ERROR
+} from "./Feed.actions";
 
 let originalState = {
   posts: [],
@@ -134,6 +139,37 @@ export default (state = originalState, action) => {
         ...state,
         err: action.payload.err
       };
+
+    case UPLOAD_NEW_SUBCOMMENT:
+      return { ...state };
+
+    case SUBCOMMENT_UPLOADED_OK:
+      const newPostStateSub = state.posts.map(post =>
+        post._id === action.payload.subcomment.parentID
+          ? (post = {
+              ...post,
+              comments: post.comments.map(comment =>
+                comment._id === action.payload.subcomment.targetID
+                  ? (comment = {
+                      ...comment,
+                      subComments: [
+                        ...comment.subComments,
+                        action.payload.subcomment
+                      ]
+                    })
+                  : comment
+              )
+            })
+          : post
+      );
+
+      return {
+        ...state,
+        posts: newPostStateSub
+      };
+
+    case SUBCOMMENT_UPLOADED_ERROR:
+      return { ...state, err: action.payload.err };
 
     default:
       return state;
