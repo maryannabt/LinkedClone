@@ -20,6 +20,14 @@ export const UPLOAD_NEW_LIKE = "UPLOAD_NEW_LIKE";
 export const LIKE_UPLOADED_OK = "LIKE_UPLOADED_OK";
 export const LIKE_UPLOADED_ERROR = "LIKE_UPLOADED_ERROR";
 
+export const UPLOAD_NEW_COMMENT = "UPLOAD_NEW_COMMENT";
+export const COMMENT_UPLOADED_OK = "COMMENT_UPLOADED_OK";
+export const COMMENT_UPLOADED_ERROR = "COMMENT_UPLOADED_ERROR";
+
+export const UPLOAD_NEW_SUBCOMMENT = "UPLOAD_NEW_SUBCOMMENT";
+export const SUBCOMMENT_UPLOADED_OK = "SUBCOMMENT_UPLOADED_OK";
+export const SUBCOMMENT_UPLOADED_ERROR = "SUBCOMMENT_UPLOADED_ERROR";
+
 export const fetchSearchResults = (userID, searchStr) => {
   return function(dispatch) {
     dispatch({ type: FETCHING_SEARCH_RESULTS });
@@ -119,6 +127,62 @@ export const updateLike = likeData => {
       .catch(err =>
         dispatch({
           type: LIKE_UPLOADED_ERROR,
+          payload: err
+        })
+      );
+  };
+};
+
+// Upload a Comment
+export const uploadComment = commentData => {
+  return function(dispatch) {
+    dispatch({ type: UPLOAD_NEW_COMMENT });
+
+    return fetch("/api/user/create/comment", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: commentData
+    })
+      .then(res => res.json())
+      .then(res =>
+        dispatch({
+          type: COMMENT_UPLOADED_OK,
+          payload: res
+        })
+      )
+      .catch(err =>
+        dispatch({
+          type: COMMENT_UPLOADED_ERROR,
+          payload: err
+        })
+      );
+  };
+};
+
+// Upload Sub Comment
+export const uploadSubComment = subCommentData => {
+  return function(dispatch) {
+    dispatch({ type: UPLOAD_NEW_SUBCOMMENT });
+
+    return fetch("/api/user/create/subcomment", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: subCommentData
+    })
+      .then(res => res.json())
+      .then(res =>
+        dispatch({
+          type: SUBCOMMENT_UPLOADED_OK,
+          payload: res
+        })
+      )
+      .catch(err =>
+        dispatch({
+          type: SUBCOMMENT_UPLOADED_ERROR,
           payload: err
         })
       );

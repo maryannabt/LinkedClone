@@ -213,4 +213,29 @@ router.post(
   })
 );
 
+// Create new Comment
+router.post("/create/comment", async (req, res) => {
+  try {
+    const comment = new Comment(req.body);
+    await comment.save();
+    let postAuthUser = await User.findById(req.body.userID).lean();
+    let commentInfo = await Comment.findById(comment._id).lean();
+
+    let newComment = {
+      likes: [],
+      subComments: [],
+      userInfo: postAuthUser,
+      ...commentInfo
+    };
+
+    return res.json({
+      msg: "Comment Saved!",
+      comment: newComment
+    });
+  } catch (err) {
+    console.log("New Error: ", err);
+    return res.json(err);
+  }
+});
+
 module.exports = router;

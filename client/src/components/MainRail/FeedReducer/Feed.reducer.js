@@ -20,11 +20,14 @@ import {
   LIKE_UPLOADED_OK,
   LIKE_UPLOADED_ERROR
 } from "./Feed.actions";
+import {
+  UPLOAD_NEW_COMMENT,
+  COMMENT_UPLOADED_OK,
+  COMMENT_UPLOADED_ERROR
+} from "./Feed.actions";
 
 let originalState = {
   posts: [],
-  uploadedComment: {},
-  uploadedSubComment: {},
   fetchingPosts: false,
   searchSuggestions: [],
   postOffSet: 0
@@ -101,6 +104,32 @@ export default (state = originalState, action) => {
       };
 
     case LIKE_UPLOADED_ERROR:
+      return {
+        ...state,
+        err: action.payload.err
+      };
+
+    case UPLOAD_NEW_COMMENT:
+      return {
+        ...state
+      };
+
+    case COMMENT_UPLOADED_OK:
+      const newPostState = state.posts.map(post =>
+        post._id === action.payload.comment.targetID
+          ? (post = {
+              ...post,
+              comments: [...post.comments, action.payload.comment]
+            })
+          : post
+      );
+
+      return {
+        ...state,
+        posts: newPostState
+      };
+
+    case COMMENT_UPLOADED_ERROR:
       return {
         ...state,
         err: action.payload.err
