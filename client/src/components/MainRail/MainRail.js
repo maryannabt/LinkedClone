@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import NewPost from "./NewPost";
 import Sort from "./Sort";
+import Feed from "./Feed";
 import { connect } from "react-redux";
 import {
   uploadPost,
@@ -10,7 +11,8 @@ import {
   removePosts,
   updateLike,
   uploadComment,
-  uploadSubComment
+  uploadSubComment,
+  fetchComments
 } from "./FeedReducer/Feed.actions";
 
 class MainRail extends Component {
@@ -36,9 +38,10 @@ class MainRail extends Component {
       removePostMsg,
       updateLike,
       uploadComment,
-      uploadSubComment
+      uploadSubComment,
+      fetchComments
     } = this.props;
-    const { postSaved } = this.props.feedData;
+    const { postSaved, posts, fetchingPosts } = this.props.feedData;
 
     if (!auth) {
       this.props.history.push("/");
@@ -54,6 +57,17 @@ class MainRail extends Component {
           removePostMsg={removePostMsg}
         />
         <Sort />
+        <Feed
+          user={user}
+          auth={auth}
+          posts={posts}
+          fetchingPosts={fetchingPosts}
+          getPosts={this.getPosts}
+          updateLike={updateLike}
+          uploadComment={uploadComment}
+          uploadSubComment={uploadSubComment}
+          fetchComments={fetchComments}
+        />
       </Main>
     );
   }
@@ -77,7 +91,8 @@ function mapDispatchToProps(dispatch) {
     updateLike: likeData => dispatch(updateLike(likeData)),
     uploadComment: commentData => dispatch(uploadComment(commentData)),
     uploadSubComment: subCommentData =>
-      dispatch(uploadSubComment(subCommentData))
+      dispatch(uploadSubComment(subCommentData)),
+    fetchComments: postID => dispatch(fetchComments(postID))
   };
 }
 

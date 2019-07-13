@@ -28,6 +28,10 @@ export const UPLOAD_NEW_SUBCOMMENT = "UPLOAD_NEW_SUBCOMMENT";
 export const SUBCOMMENT_UPLOADED_OK = "SUBCOMMENT_UPLOADED_OK";
 export const SUBCOMMENT_UPLOADED_ERROR = "SUBCOMMENT_UPLOADED_ERROR";
 
+export const FETCHING_COMMENTS = "FETCHING_COMMENTS";
+export const COMMENTS_FETCHED_OK = "COMMENTS_FETCHED_OK";
+export const COMMENTS_FETCHED_ERROR = "COMMENTS_FETCHED_ERROR";
+
 export const fetchSearchResults = (userID, searchStr) => {
   return function(dispatch) {
     dispatch({ type: FETCHING_SEARCH_RESULTS });
@@ -183,6 +187,33 @@ export const uploadSubComment = subCommentData => {
       .catch(err =>
         dispatch({
           type: SUBCOMMENT_UPLOADED_ERROR,
+          payload: err
+        })
+      );
+  };
+};
+
+// Fetch Comments
+export const fetchComments = postID => {
+  return function(dispatch) {
+    dispatch({ type: FETCHING_COMMENTS });
+
+    return fetch(`/api/user/comment/${postID}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(res => res.json())
+      .then(res =>
+        dispatch({
+          type: COMMENTS_FETCHED_OK,
+          payload: res
+        })
+      )
+      .catch(err =>
+        dispatch({
+          type: COMMENTS_FETCHED_ERROR,
           payload: err
         })
       );

@@ -269,4 +269,48 @@ router.post(
   })
 );
 
+// Get Comments for Post
+router.get(
+  "/comment/:id",
+  asm(async (req, res) => {
+    try {
+      const comments = await Comment.find({ targetID: req.params.id })
+        .sort({ createdAt: 1 })
+        .lean();
+
+      let newArr = [];
+
+      for (var i = 0; i < comments.length; i++) {
+        let userInfo = await User.findById(comments[i].userID);
+        let likes = await Like.find({ targetID: comments[i]._id });
+        let subComments = await Subcomment.find({
+          targetID: comments[i]._id
+        }).lean();
+
+        let subCommentsWithInfo = [];
+        for (let subComment of subComments) {
+          let subUserInfo = await User.findById(subComment.userID).lean();
+          let likes = await Like.find({ targetID: subComment._id });
+          let sub = await { ...subComment, subUserInfo, likes };
+          await subCommentsWithInfo.push(sub);
+        }
+
+        newArr[i] = {
+          ...comments[i],
+          userInfo,
+          likes,
+          subComments: subCommentsWithInfo
+        };
+      }
+      return res.json({
+        commentsArr: [...newArr],
+        postID: req.params.id
+      });
+    } catch (err) {
+      console.log("New Error: ", err);
+      return res.json(err);
+    }
+  })
+);
+
 module.exports = router;
