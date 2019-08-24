@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import Loader from "../../img/Loader";
 import Profile from "./Post_Profile";
+import PostText from "./Post_Text";
+import Image from "./Post_Image";
 
 class Post extends Component {
   state = { doneLoading: false };
@@ -11,7 +13,7 @@ class Post extends Component {
   }
 
   render() {
-    const { postAuthUser, updatedAt } = this.props;
+    const { postAuthUser, updatedAt, text } = this.props;
 
     if (!this.state.doneLoading) {
       return <Loader />;
@@ -19,6 +21,7 @@ class Post extends Component {
       return (
         <PostDiv>
           <Profile {...postAuthUser} timeOfPost={updatedAt} />
+          <PostText post={text} />
         </PostDiv>
       );
     }
