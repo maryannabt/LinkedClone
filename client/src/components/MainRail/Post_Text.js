@@ -29,4 +29,5 @@ const PostBox = styled.div`
   font-size: 1.4rem;
   color: rgba(0, 0, 0, 0.9);
   font-weight: 400;
+  word-break: break-all;
 `;

@@ -13,7 +13,7 @@ class Post extends Component {
   }
 
   render() {
-    const { postAuthUser, updatedAt, text } = this.props;
+    const { postAuthUser, updatedAt, text, img } = this.props;
 
     if (!this.state.doneLoading) {
       return <Loader />;
@@ -22,6 +22,7 @@ class Post extends Component {
         <PostDiv>
           <Profile {...postAuthUser} timeOfPost={updatedAt} />
           <PostText post={text} />
+          {img && <Image img={img} />}
         </PostDiv>
       );
     }
