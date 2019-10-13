@@ -79,6 +79,11 @@ class Post extends Component {
             postID={_id}
             authorID={user._id}
           />
+          {comments.length === 0 && (
+            <BeFirst show={this.state.showBeFirst}>
+              Be the first to comment on this
+            </BeFirst>
+          )}
         </PostDiv>
       );
     }
@@ -96,5 +101,21 @@ const PostDiv = styled.div`
 
   @media only screen and (max-width: 580px) {
     width: 99%;
+  }
+`;
+
+const BeFirst = styled.div`
+  width: 53.3rem;
+  height: 4rem;
+  display: ${props => (props.show ? "flex" : "none")};
+  align-items: center;
+  background-color: #f3f6f8;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: rgb(0, 0, 0, 0.9);
+  padding-left: 1.5rem;
+
+  @media only screen and (max-width: 580px) {
+    width: 97.77%;
   }
 `;
