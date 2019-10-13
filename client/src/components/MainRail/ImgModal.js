@@ -4,17 +4,20 @@ import styled from "styled-components";
 class ImgModal extends Component {
   componentDidMount() {
     document.addEventListener("mousedown", this.hideModal, false);
+
     this.appWrapper = document.getElementById("root");
-    this.bodyScrollPos = document.documentElement.scrollTop || 0;
+    this.bodyScrollPos =
+      document.body.scrollTop || document.documentElement.scrollTop || 0;
     this.appWrapper.style.position = "fixed";
     this.appWrapper.style.top = `-${this.bodyScrollPos}px`;
   }
 
   componentWillUnmount() {
     document.removeEventListener("mousedown", this.hideModal, false);
+
     this.appWrapper.style.removeProperty("position");
     this.appWrapper.style.removeProperty("top");
-    document.documentElement.scrollTop = this.bodyScrollPos;
+    document.documentElement.scrollTop = document.body.scrollTop = this.bodyScrollPos;
   }
 
   hideModal = e => {

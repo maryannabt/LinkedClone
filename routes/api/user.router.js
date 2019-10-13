@@ -280,7 +280,7 @@ router.get(
 
       let newArr = [];
 
-      for (var i = 0; i < comments.length; i++) {
+      for (let i = 0; i < comments.length; i++) {
         let userInfo = await User.findById(comments[i].userID);
         let likes = await Like.find({ targetID: comments[i]._id });
         let subComments = await Subcomment.find({
@@ -306,6 +306,27 @@ router.get(
         commentsArr: [...newArr],
         postID: req.params.id
       });
+    } catch (err) {
+      console.log("New Error: ", err);
+      return res.json(err);
+    }
+  })
+);
+
+// Get Likes for specific post
+router.get(
+  "/likes/:id",
+  asm(async (req, res) => {
+    try {
+      const likes = await Like.find({ targetID: req.params.id }).lean();
+
+      let likesArr = [];
+      for (let i = 0; i < likes.length; i++) {
+        let userInfo = await User.findById(likes[i].userID);
+        likesArr[i] = { ...likes[i], userInfo };
+      }
+
+      return res.json([...likesArr]);
     } catch (err) {
       console.log("New Error: ", err);
       return res.json(err);
