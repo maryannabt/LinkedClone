@@ -18,8 +18,5 @@ export default Homepage;
 const Wrapper = styled.div`
   display: flex;
   flex-basis: 100%;
-
-  @media only screen and (max-width: 580px) {
-    justify-content: center;
-  }
+  justify-content: center;
 `;

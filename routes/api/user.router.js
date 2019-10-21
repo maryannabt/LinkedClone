@@ -177,9 +177,6 @@ router.get(
         let postAuthUser = await User.findById(posts[i].userID);
         let likes = await Like.find({ targetID: posts[i]._id });
         let comments = await Comment.find({ targetID: posts[i]._id }).lean();
-        for (let j = 0; j < comments.length; j++) {
-          comments[j].subComments = [];
-        }
         newArr[i] = { ...posts[i], comments, likes, postAuthUser };
       }
       return res.json([...newArr]);
@@ -250,17 +247,17 @@ router.post(
       const subComment = new Subcomment(req.body);
       await subComment.save();
       let postAuthUser = await User.findById(req.body.userID).lean();
-      let commentInfo = await Subcomment.findById(subComment._id).lean();
+      let subCommentInfo = await Subcomment.findById(subComment._id).lean();
 
-      let newComment = {
+      let newSubComment = {
         likes: [],
         subUserInfo: postAuthUser,
-        ...commentInfo
+        ...subCommentInfo
       };
 
       return res.json({
-        msg: "Comment Saved!",
-        subcomment: newComment
+        msg: "SubComment Saved!",
+        subcomment: newSubComment
       });
     } catch (err) {
       console.log("New Error: ", err);

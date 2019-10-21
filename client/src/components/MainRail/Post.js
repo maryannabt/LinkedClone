@@ -6,6 +6,7 @@ import PostText from "./Post_Text";
 import Image from "./Post_Image";
 import SocialCount from "./Post_SocialCount";
 import Social from "./Post_Social";
+import Comments from "./Post_Comments";
 
 class Post extends Component {
   state = {
@@ -54,7 +55,11 @@ class Post extends Component {
       comments,
       _id,
       updateLike,
-      user
+      user,
+      allowComments,
+      uploadComment,
+      uploadSubComment,
+      fetchComments
     } = this.props;
 
     if (!this.state.doneLoading) {
@@ -83,6 +88,20 @@ class Post extends Component {
             <BeFirst show={this.state.showBeFirst}>
               Be the first to comment on this
             </BeFirst>
+          )}
+          {this.state.showComments && (
+            <Comments
+              allowComments={allowComments}
+              uploadComment={uploadComment}
+              userID={user._id}
+              user={user}
+              userAvatar={user.avatar}
+              postID={_id}
+              uploadSubComment={uploadSubComment}
+              commentsArr={comments}
+              updateLike={updateLike}
+              fetchComments={fetchComments}
+            />
           )}
         </PostDiv>
       );
