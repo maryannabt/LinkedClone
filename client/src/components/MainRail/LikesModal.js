@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import fetch from "isomorphic-fetch";
 import LikesItem from "./LikesItem";
 
 class LikesModal extends Component {

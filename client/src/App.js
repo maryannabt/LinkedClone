@@ -10,6 +10,7 @@ import LoginStage3 from "./components/Login/LoginStage3";
 import LoginFail from "./components/Login/LoginFail";
 import MyNetwork from "./components/MyNetwork/MyNetwork";
 import Homepage from "./components/Homepage";
+import UserPage from "./components/UserPage/UserPage";
 
 class App extends Component {
   render() {
@@ -25,6 +26,7 @@ class App extends Component {
             <Route path="/login" component={LoginFail} />
             <Route path="/feed" component={Homepage} />
             <Route path="/mynetwork" component={MyNetwork} />
+            <Route path="/user/:id" component={UserPage}></Route>
             <Route component={MyNetwork} />
           </Switch>
         </Wrapper>

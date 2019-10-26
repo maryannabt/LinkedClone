@@ -331,4 +331,26 @@ router.get(
   })
 );
 
+// Get a selected user profile and 10 users he can follow
+router.get("/profile/:id", async (req, res) => {
+  let limitInt = parseInt(req.query.limit);
+  try {
+    const user = await User.findById(req.params.id);
+    const usersToFollow = await User.find({ _id: { $ne: req.params.id } })
+      .sort({ createdAt: -1 })
+      .limit(limitInt);
+    const userLastComments = await Comment.find({ userID: req.params.id })
+      .sort({ createdAt: -1 })
+      .limit(4);
+
+    return res.json({
+      user,
+      usersToFollow,
+      userLastComments
+    });
+  } catch (err) {
+    console.log("New Error: ", err);
+  }
+});
+
 module.exports = router;

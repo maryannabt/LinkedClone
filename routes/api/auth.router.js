@@ -126,14 +126,10 @@ router.get(
 router.post(
   "/update/:id",
   asm(async (req, res) => {
-    try {
-      const selectedUser = await User.findById(req.params.id);
-      await selectedUser.updateOne(req.body);
-      const updatedUser = await User.findById(req.params.id);
-      return res.status(200).json({ selectedUserUpdate: updatedUser });
-    } catch (err) {
-      next(new Error(err));
-    }
+    const selectedUser = await User.findById(req.params.id);
+    await selectedUser.updateOne(req.body);
+    const updatedUser = await User.findById(req.params.id);
+    return res.status(200).json({ selectedUserUpdate: updatedUser });
   })
 );
 
