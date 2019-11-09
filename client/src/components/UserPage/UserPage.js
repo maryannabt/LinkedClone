@@ -8,6 +8,7 @@ import {
 import Loader from "../../img/Loader";
 import ProfileTop from "./ProfileTop";
 import Highlights from "./Highlights";
+import Activity from "./Activity";
 
 class UserPage extends Component {
   componentDidMount() {
@@ -45,6 +46,10 @@ class UserPage extends Component {
             <LeftColum>
               <ProfileTop selectedUser={selectedUser} user={user} />
               <Highlights selectedUser={selectedUser} />
+              <Activity
+                selectedUser={selectedUser}
+                userLastComments={userLastComments}
+              />
             </LeftColum>
           </Main>
         </Wrapper>
