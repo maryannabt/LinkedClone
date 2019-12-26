@@ -9,6 +9,8 @@ import Loader from "../../img/Loader";
 import ProfileTop from "./ProfileTop";
 import Highlights from "./Highlights";
 import Activity from "./Activity";
+import RightColum from "./RightColum";
+import BottomBar from "./BottomBar";
 
 class UserPage extends Component {
   componentDidMount() {
@@ -52,6 +54,7 @@ class UserPage extends Component {
               />
             </LeftColum>
           </Main>
+          <BottomBar />
         </Wrapper>
       );
     } else {
@@ -76,10 +79,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(UserPage);
+export default connect(mapStateToProps, mapDispatchToProps)(UserPage);
 
 // CSS
 const Wrapper = styled.div`

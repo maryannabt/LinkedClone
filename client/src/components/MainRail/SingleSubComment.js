@@ -66,8 +66,7 @@ class SingleSubComment extends Component {
             </ComUser>
           </Link>
           <ComTitle>
-            {comment.subUserInfo.job_title} at
-            {comment.subUserInfo.company_name}
+            {comment.subUserInfo.job_title} at {comment.subUserInfo.company_name}
           </ComTitle>
           <ComText>{comment.text}</ComText>
           <ComSocialDiv>

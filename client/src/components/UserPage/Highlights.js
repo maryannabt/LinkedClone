@@ -168,7 +168,7 @@ const TextText = styled.div`
 const MessageButton = styled.button`
   border: none;
   width: 15.1rem;
-  height: 3.2rem;
+  padding: 0.5rem;
   margin-left: 1rem;
   margin-top: 0.5rem;
   font-size: 1.6rem;
