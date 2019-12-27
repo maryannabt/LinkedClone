@@ -9,7 +9,7 @@ import Loader from "../../img/Loader";
 import ProfileTop from "./ProfileTop";
 import Highlights from "./Highlights";
 import Activity from "./Activity";
-import RightColum from "./RightColum";
+import RightColumn from "./RightColumn";
 import BottomBar from "./BottomBar";
 
 class UserPage extends Component {
@@ -45,14 +45,17 @@ class UserPage extends Component {
       return (
         <Wrapper>
           <Main>
-            <LeftColum>
+            <LeftColumn>
               <ProfileTop selectedUser={selectedUser} user={user} />
               <Highlights selectedUser={selectedUser} />
               <Activity
                 selectedUser={selectedUser}
                 userLastComments={userLastComments}
               />
-            </LeftColum>
+            </LeftColumn>
+            {usersToFollow.length > 0 && (
+              <RightColumn usersToFollow={usersToFollow} />
+            )}
           </Main>
           <BottomBar />
         </Wrapper>
@@ -99,7 +102,7 @@ const Main = styled.div`
   background-color: #f5f5f5;
 `;
 
-const LeftColum = styled.div`
+const LeftColumn = styled.div`
   width: 79.2rem;
 
   @media only screen and (max-width: 580px) {
