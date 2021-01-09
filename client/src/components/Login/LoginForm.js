@@ -6,7 +6,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import Img from "../../img/showcase.jpg";
-import { withRouter } from "react-router-dom";
 import { flexbox } from "../../utils/utils";
 
 class LoginForm extends Component {
@@ -200,7 +199,7 @@ class LoginForm extends Component {
   }
 }
 
-export default withRouter(LoginForm);
+export default LoginForm;
 
 //CSS//
 const Wrapper = styled.div`

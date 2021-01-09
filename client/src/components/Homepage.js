@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import MainRail from "./MainRail/MainRail";
+import LeftRail from "./LeftRail/LeftRail";
 
 class Homepage extends Component {
   render() {
     return (
       <Wrapper>
+        <LeftRail />
         <MainRail {...this.props} />
       </Wrapper>
     );
