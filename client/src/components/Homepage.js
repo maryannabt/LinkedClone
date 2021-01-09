@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import MainRail from "./MainRail/MainRail";
 import LeftRail from "./LeftRail/LeftRail";
+import RightRail from './RightRail/RightRail';
 
 class Homepage extends Component {
   render() {
@@ -9,6 +10,7 @@ class Homepage extends Component {
       <Wrapper>
         <LeftRail />
         <MainRail {...this.props} />
+        <RightRail />
       </Wrapper>
     );
   }

@@ -165,7 +165,13 @@ router.get(
   asm(async (req, res) => {
     let offSet = parseInt(req.query.offset);
     try {
-      const posts = await Post.find({ userID: { $ne: req.params.id } })
+      // const posts = await Post.find({ userID: { $ne: req.params.id } })
+      //   .sort({ createdAt: -1 })
+      //   .limit(10)
+      //   .skip(offSet)
+      //   .lean();
+
+      const posts = await Post.find({ })
         .sort({ createdAt: -1 })
         .limit(10)
         .skip(offSet)
@@ -352,5 +358,18 @@ router.get("/profile/:id", async (req, res) => {
     console.log("New Error: ", err);
   }
 });
+
+// Get the users to follow for the logged in user
+router.get('/userstofollow/:id', async (req, res, next) => {
+  let limitInt = parseInt(req.query.limit)
+  
+  try {
+      const users = await User.find({ _id: { $ne: req.params.id } }).sort({ createdAt: -1 }).limit(limitInt)
+      res.json({ users })
+
+  } catch (err) {
+      console.log('New Error: ', err)
+  }
+})
 
 module.exports = router;

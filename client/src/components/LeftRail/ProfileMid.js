@@ -7,7 +7,7 @@ class ProfileMid extends Component {
         return (
 
             <Mid>
-                <ProfileViews>
+                <ProfileViews href="#">
                     <div>
                         Who's viewed your profile
                     </div>
@@ -15,7 +15,7 @@ class ProfileMid extends Component {
                        150
                     </IntDiv>
                 </ProfileViews>
-                <PostsViews>
+                <PostsViews href="#">
                     <div>
                         Views of your post
                     </div>
@@ -41,7 +41,7 @@ justify-content: center;
 align-items: center; 
 `
 
-const ProfileViews = styled.p`
+const ProfileViews = styled.a`
 height: 2rem;
 width: 19rem;
 display: flex;

@@ -83,7 +83,7 @@ display: flex;
 align-items: center;
 text-decoration: none;
 font-size: 1.3rem;
-padding-bottom: 0.4rem;
+padding-bottom: 0.2rem;
 `
 
 const MiddleBox = styled.div`
