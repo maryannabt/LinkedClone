@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ReactDOM from 'react-dom';
 import styled from "styled-components";
 import fetch from "isomorphic-fetch";
 import LikesItem from "./LikesItem";
@@ -16,6 +17,7 @@ class LikesModal extends Component {
       document.body.scrollTop || document.documentElement.scrollTop || 0;
     this.appWrapper.style.position = "fixed";
     this.appWrapper.style.top = `-${this.bodyScrollPos}px`;
+    this.appWrapper.style.width = "100%";
 
     try {
       let res = await fetch(`/api/user/likes/${this.props.postID}`, {
@@ -47,23 +49,26 @@ class LikesModal extends Component {
 
   render() {
     const { likesArr } = this.state;
-    return (
-      <Wrapper>
-        <Modal></Modal>
-        <Main ref={LikeModal => (this.LikeModal = LikeModal)}>
-          <LikesHeader>
-            <CountDiv>{likesArr.length} Likes</CountDiv>
-            <CloseWindow onClick={() => this.props.displayModal()}>
-              ╳
-            </CloseWindow>
-          </LikesHeader>
-          {likesArr &&
-            likesArr.map(like => (
-              <LikesItem userInfo={like.userInfo} key={like.userID} />
-            ))}
-        </Main>
-      </Wrapper>
+
+    const content = (
+    <Wrapper>
+      <Modal></Modal>
+      <Main ref={LikeModal => (this.LikeModal = LikeModal)}>
+        <LikesHeader>
+          <CountDiv>{likesArr.length} Likes</CountDiv>
+          <CloseWindow onClick={() => this.props.displayModal()}>
+            ╳
+          </CloseWindow>
+        </LikesHeader>
+        {likesArr &&
+          likesArr.map(like => (
+            <LikesItem userInfo={like.userInfo} key={like.userID} />
+          ))}
+      </Main>
+    </Wrapper>
     );
+
+    return ReactDOM.createPortal(content, document.getElementById('likes-modal'));
   }
 }
 

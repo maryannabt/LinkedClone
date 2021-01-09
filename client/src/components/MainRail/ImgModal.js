@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ReactDOM from 'react-dom';
 import styled from "styled-components";
 
 class ImgModal extends Component {
@@ -10,6 +11,7 @@ class ImgModal extends Component {
       document.body.scrollTop || document.documentElement.scrollTop || 0;
     this.appWrapper.style.position = "fixed";
     this.appWrapper.style.top = `-${this.bodyScrollPos}px`;
+    this.appWrapper.style.width = "100%";
   }
 
   componentWillUnmount() {
@@ -27,7 +29,7 @@ class ImgModal extends Component {
   };
 
   render() {
-    return (
+    const content = (
       <ModalWrapper>
         <Modal></Modal>
         <CloseWindow onClick={() => this.props.displayModal()}>╳</CloseWindow>
@@ -36,6 +38,8 @@ class ImgModal extends Component {
         </ModalMain>
       </ModalWrapper>
     );
+
+  return ReactDOM.createPortal(content, document.getElementById('pics-modal'));
   }
 }
 

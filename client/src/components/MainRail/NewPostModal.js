@@ -23,6 +23,11 @@ class NewPostModal extends Component {
 
   componentDidMount() {
     document.addEventListener("mousedown", this.hideModal, false);
+
+    this.appWrapper = document.getElementById("root");
+    this.appWrapper.style.position = "fixed";
+    this.appWrapper.style.width = "100%";
+
     if (this.props.img) {
       const reader = new FileReader();
       reader.readAsDataURL(this.props.img);
@@ -33,6 +38,7 @@ class NewPostModal extends Component {
 
   componentWillUnmount() {
     document.removeEventListener("mousedown", this.hideModal, false);
+    this.appWrapper.style.removeProperty("position");
     this.props.nullUploadedImg();
     this.props.removePostMsg();
   }
