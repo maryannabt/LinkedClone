@@ -11,6 +11,7 @@ import LoginFail from "./components/Login/LoginFail";
 import MyNetwork from "./components/MyNetwork/MyNetwork";
 import Homepage from "./components/Homepage";
 import UserPage from "./components/UserPage/UserPage";
+import BottomBar from './components/Bottom/BottomBar';
 
 class App extends Component {
   render() {
@@ -29,6 +30,7 @@ class App extends Component {
             <Route path="/user/:id" component={UserPage}></Route>
             <Route component={MyNetwork} />
           </Switch>
+          <BottomBar />
         </Wrapper>
       </BrowserRouter>
     );

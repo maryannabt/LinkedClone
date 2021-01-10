@@ -36,14 +36,14 @@ import {
   COMMENTS_FETCHED_ERROR
 } from "./Feed.actions";
 
-let originalState = {
+let initialState = {
   posts: [],
   fetchingPosts: false,
   searchSuggestions: [],
   postOffSet: 0
 };
 
-export default (state = originalState, action) => {
+export default (state = initialState, action) => {
   switch (action.type) {
     case FETCHING_SEARCH_RESULTS:
       return state;

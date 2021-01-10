@@ -37,7 +37,7 @@ import {
 import { CLEAR_LOGIN_ERROR } from "./Login.actions";
 import { LOG_USER_OUT } from "./Login.actions";
 
-let originalState = {
+let initialState = {
   userDoneTutorial: false,
   userLocationUpdated: false,
   userJobUpdated: false,
@@ -46,7 +46,7 @@ let originalState = {
   user: {}
 };
 
-export default (state = originalState, action) => {
+export default (state = initialState, action) => {
   switch (action.type) {
     case VERIFY_TOKEN:
       return { ...state, loginErrMsg: null };
