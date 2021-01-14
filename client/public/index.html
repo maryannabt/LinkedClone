@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="shortcut icon" href="%PUBLIC_URL%/linkedin.ico" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
@@ -20,11 +20,63 @@
       crossorigin="anonymous"
     />
     <title>LinkedIn</title>
+    <style>
+      .loader_wrapper{
+      margin: 0;
+      padding: 0;
+      position: absolute;
+      top: calc(50% - 3.65rem);
+      left: calc(50% - 5rem);
+      height: 7.3rem;
+      width: 10rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      }
+      
+      .loader_img{
+      width: 4rem;
+      height: 4rem;
+      }
+      
+      .loader_loader{
+      margin-top: 1rem;
+      width: 8rem;
+      height: .3rem;
+      background-color: grey;
+      display: flex;
+      overflow: hidden;
+      border-radius: 2px;
+      }
+      
+      .loader_line{
+      height: .3rem;
+      width: 4rem;
+      background-color: #007bb6;
+      animation: spin 1s linear infinite;
+      }
+      
+      @keyframes spin {
+        0% { transform: translate(-3rem) }
+        50% { transform: translate(8rem) }
+        100% { transform: translate(-3rem) }
+      }
+      
+    </style>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="pics-modal"></div>
     <div id="likes-modal"></div>
-    <div id="root"></div>
+    <div id="root">
+      <div class="loader_wrapper">
+        <img src="topbar_logo.png" class="loader_img"/>
+        <div class="loader_loader">
+          <span class="loader_line"></span>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
