@@ -44,7 +44,7 @@ if (localState) {
 
 const middleware = applyMiddleware(showStore, saveState, ReduxThunk);
 const store = createStore(rootReducer, { loginData: initState }, middleware);
-// store.dispatch(verifyToken(initState.token));
+store.dispatch(verifyToken(initState.token));
 
 ReactDOM.render(
   <Provider store={store}>
