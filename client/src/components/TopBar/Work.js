@@ -8,9 +8,9 @@ class Work extends Component {
     return (
       <Main>
         <Link>
-          <i class="fas fa-th" />
+          <i className="fas fa-th" />
           <div>
-            Work <i class="fas fa-sort-down" />
+            Work <i className="fas fa-sort-down" />
           </div>
         </Link>
         <TryPremium>

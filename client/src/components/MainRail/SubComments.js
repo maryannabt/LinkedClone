@@ -59,7 +59,7 @@ class SubComments extends Component {
                   onChange={this.updateInfo}
                 />
                 <Photo>
-                  <i class="fas fa-camera"></i>
+                  <i className="fas fa-camera"></i>
                 </Photo>
                 <SendButton
                   input={this.state.text.length}

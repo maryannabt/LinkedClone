@@ -20,7 +20,7 @@ class Profile extends Component {
             <InfoTime>{this.props.timeOfPost}</InfoTime>
           </Info>
           <PostOptions>
-            <i class="fas fa-ellipsis-h" />
+            <i className="fas fa-ellipsis-h" />
           </PostOptions>
         </ProfileDiv>
       </Link>

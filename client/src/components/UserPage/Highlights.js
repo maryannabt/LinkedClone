@@ -50,7 +50,7 @@ class Highlights extends Component {
           <LI>
             <LiImgDiv>
               <LiImgWithout>
-                <i class="fas fa-users"></i>
+                <i className="fas fa-users"></i>
               </LiImgWithout>
             </LiImgDiv>
             <LiText>
@@ -62,7 +62,7 @@ class Highlights extends Component {
         <ShowMore onClick={this.displayMore} showMore={this.state.showMore}>
           {!this.state.showMore && "Show More"}
           {this.state.showMore && "Show Less"}
-          <i class="fas fa-angle-down"></i>
+          <i className="fas fa-angle-down"></i>
         </ShowMore>
       </Wrapper>
     );

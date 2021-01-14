@@ -1,4 +1,3 @@
-const asm = require("../../utils/async_middleware");
 const express = require("express");
 const multer = require("multer");
 const cloudinary = require("cloudinary");
@@ -41,7 +40,7 @@ cloudinary.config({
 router.post(
   "/finish/:id",
   upload.single("avatar"),
-  asm(async (req, res) => {
+  async (req, res) => {
     try {
       const selectedUser = await User.findById(req.params.id);
 
@@ -57,13 +56,13 @@ router.post(
     } catch (err) {
       console.log("New Error: ", err);
     }
-  })
+  }
 );
 
 // Finish SignUp without user avatar
 router.post(
   "/finish/noavatar/:id",
-  asm(async (req, res) => {
+  async (req, res) => {
     try {
       const selectedUser = await User.findById(req.params.id);
       await selectedUser.updateOne({
@@ -77,14 +76,14 @@ router.post(
     } catch (err) {
       console.log("New Error: ", err);
     }
-  })
+  }
 );
 
 // If there is a search string - get 10 last created users that match the search request (filtering by first or last name) for search result
 // If the search string is empty - get 10 last created users (except for the logged in user) for search result
 router.get(
   "/search/:id",
-  asm(async (req, res) => {
+  async (req, res) => {
     try {
       if (req.query.search !== "") {
         const searchSuggestions = await User.find({
@@ -110,14 +109,14 @@ router.get(
       console.log("Your Error is: ", err);
       return res.json(err);
     }
-  })
+  }
 );
 
 // Create new Post
 router.post(
   "/create/post",
   upload.single("img"),
-  asm(async (req, res) => {
+  async (req, res) => {
     try {
       let body = JSON.parse(req.body.text);
 
@@ -156,13 +155,13 @@ router.post(
     } catch (err) {
       console.log("New Error: ", err);
     }
-  })
+  }
 );
 
 // Get 10 posts with their likes and comments, omitting the logged in user's posts
 router.get(
   "/posts/:id",
-  asm(async (req, res) => {
+  async (req, res) => {
     let offSet = parseInt(req.query.offset);
     try {
       // const posts = await Post.find({ userID: { $ne: req.params.id } })
@@ -190,13 +189,13 @@ router.get(
       console.log("New Error: ", err);
       return res.json(err);
     }
-  })
+  }
 );
 
 // Create new Like
 router.post(
   "/create/like",
-  asm(async (req, res) => {
+  async (req, res) => {
     try {
       const like = await Like.findOne({
         targetID: req.body.targetID,
@@ -214,13 +213,13 @@ router.post(
       console.log("New Error: ", err);
       return res.json(err);
     }
-  })
+  }
 );
 
 // Create new Comment
 router.post(
   "/create/comment",
-  asm(async (req, res) => {
+  async (req, res) => {
     try {
       const comment = new Comment(req.body);
       await comment.save();
@@ -242,13 +241,13 @@ router.post(
       console.log("New Error: ", err);
       return res.json(err);
     }
-  })
+  }
 );
 
 // Create new SubComment
 router.post(
   "/create/subcomment",
-  asm(async (req, res) => {
+  async (req, res) => {
     try {
       const subComment = new Subcomment(req.body);
       await subComment.save();
@@ -269,13 +268,13 @@ router.post(
       console.log("New Error: ", err);
       return res.json(err);
     }
-  })
+  }
 );
 
 // Get Comments for Post
 router.get(
   "/comment/:id",
-  asm(async (req, res) => {
+  async (req, res) => {
     try {
       const comments = await Comment.find({ targetID: req.params.id })
         .sort({ createdAt: 1 })
@@ -313,13 +312,13 @@ router.get(
       console.log("New Error: ", err);
       return res.json(err);
     }
-  })
+  }
 );
 
 // Get Likes for specific post
 router.get(
   "/likes/:id",
-  asm(async (req, res) => {
+  async (req, res) => {
     try {
       const likes = await Like.find({ targetID: req.params.id }).lean();
 
@@ -334,7 +333,7 @@ router.get(
       console.log("New Error: ", err);
       return res.json(err);
     }
-  })
+  }
 );
 
 // Get a selected user profile and 10 users he can follow

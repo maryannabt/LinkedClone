@@ -10,9 +10,9 @@ class FriendList extends Component {
             <Wrapper>
             <div>
                 <Search>
-                    <SearchIcon><i class="fas fa-search"></i></SearchIcon>
+                    <SearchIcon><i className="fas fa-search"></i></SearchIcon>
                     <Input placeholder="Search"/>
-                    <SettingsIcon><i class="fas fa-sliders-h"></i></SettingsIcon>
+                    <SettingsIcon><i className="fas fa-sliders-h"></i></SettingsIcon>
                 </Search>
                 {msgUsers.map((item, i) =>
                 <SingleChat key={`${item}${i}`}>

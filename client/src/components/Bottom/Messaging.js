@@ -26,8 +26,8 @@ class Messaging extends Component {
                         <StatusSign></StatusSign>
                         Messaging
                     </StatusContainer>
-                    <NewMsg><i class="far fa-edit"></i></NewMsg>
-                    <Settings><i class="fas fa-cog"></i></Settings>
+                    <NewMsg><i className="far fa-edit"></i></NewMsg>
+                    <Settings><i className="fas fa-cog"></i></Settings>
                 </Main>
                {this.state.showMsgWindow && <FriendList msgUsers={msgUsers}/>}
             </Wrapper>

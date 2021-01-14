@@ -39,13 +39,13 @@ class Social extends Component {
             postLike={this.props.userLikePost}
             onClick={this.uploadLike}
           >
-            <i class="far fa-thumbs-up"></i> Like
+            <i className="far fa-thumbs-up"></i> Like
           </SocialActionsLike>
           <SocialActions onClick={this.displayHidden.bind(this)}>
-            <i class="far fa-comment-alt"></i> Comment
+            <i className="far fa-comment-alt"></i> Comment
           </SocialActions>
           <SocialActions>
-            <i class="fas fa-share"></i> Share
+            <i className="fas fa-share"></i> Share
           </SocialActions>
         </Box>
 
@@ -53,7 +53,7 @@ class Social extends Component {
           onClick={this.displayWindow.bind(this)}
           show={this.state.showTopComments}
         >
-          {this.state.sortBy} Comments<i class="fas fa-sort-down"></i>
+          {this.state.sortBy} Comments<i className="fas fa-sort-down"></i>
         </TopComments>
 
         <SortComments show={this.state.display}>

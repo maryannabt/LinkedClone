@@ -22,7 +22,7 @@ class Sort extends Component {
 
         <SortButton onClick={this.displayWindow.bind(this)}>
           Sort By: <span>{this.state.sortBy}</span>
-          <i class="fas fa-sort-down" />
+          <i className="fas fa-sort-down" />
         </SortButton>
         <SortMenu show={this.state.display}>
           <Top

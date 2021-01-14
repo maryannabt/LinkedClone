@@ -48,7 +48,7 @@ class Search extends Component {
             ref={SRBar => (this.SRBar = SRBar)}
           />
           <SearchIcon show={this.state.searchBarActive}>
-            <i class="fas fa-search" />
+            <i className="fas fa-search" />
           </SearchIcon>
 
           {this.state.searchBarActive && (
@@ -70,9 +70,9 @@ export default Search;
 class Result extends Component {
   state = {
     searchGroups: [
-      { name: "People", avatar: <i class="fas fa-user-friends" /> },
-      { name: "Jobs", avatar: <i class="fas fa-briefcase" /> },
-      { name: "Content", avatar: <i class="far fa-newspaper" /> }
+      { name: "People", avatar: <i className="fas fa-user-friends" /> },
+      { name: "Jobs", avatar: <i className="fas fa-briefcase" /> },
+      { name: "Content", avatar: <i className="far fa-newspaper" /> }
     ]
   };
 

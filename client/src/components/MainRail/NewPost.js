@@ -34,10 +34,10 @@ class NewPost extends Component {
       <Main>
         <StartPost>
           <Post onClick={this.showModal.bind(this)}>
-            <i class="far fa-edit" /> <p>Start a post</p>
+            <i className="far fa-edit" /> <p>Start a post</p>
           </Post>
           <Photo>
-            <i class="fas fa-camera" />
+            <i className="fas fa-camera" />
             <UploadPhoto
               type="file"
               name="photo_upload"
@@ -46,7 +46,7 @@ class NewPost extends Component {
             />
           </Photo>
           <Video>
-            <i class="fas fa-video" />
+            <i className="fas fa-video" />
             <UploadPhoto
               type="file"
               name="video_upload"

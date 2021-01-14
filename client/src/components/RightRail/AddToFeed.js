@@ -8,7 +8,7 @@ class AddToFeed extends Component {
         return (
             <Main>
                 <Header>
-                    <span>Add to your feed</span> <i class="fas fa-info"></i>
+                    <span>Add to your feed</span> <i className="fas fa-info"></i>
                 </Header>
 
                 {this.props.usersArr && this.props.usersArr.map(user =>
@@ -22,7 +22,7 @@ class AddToFeed extends Component {
                                 <Title>{user.job_title} at {user.company_name}</Title>
                             </FollowBoxLink>
                         </Link>
-                        <FollowBoxButton><i class="fas fa-plus"></i> Follow</FollowBoxButton>
+                        <FollowBoxButton><i className="fas fa-plus"></i> Follow</FollowBoxButton>
                     </FollowBox>
                 )}
 

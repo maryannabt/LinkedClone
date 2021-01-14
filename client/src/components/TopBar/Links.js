@@ -32,7 +32,7 @@ class Links extends Component {
           name={"/feed"}
           active={activePage}
         >
-          <i class="fas fa-home" />
+          <i className="fas fa-home" />
           <LinkText>Home</LinkText>
         </LinkDiv>
 
@@ -41,7 +41,7 @@ class Links extends Component {
           name={"/mynetwork"}
           active={activePage}
         >
-          <i class="fas fa-user-friends" />
+          <i className="fas fa-user-friends" />
           <LinkText>My Network</LinkText>
         </LinkDiv>
 
@@ -50,7 +50,7 @@ class Links extends Component {
           name={"/jobs"}
           active={activePage}
         >
-          <i class="fas fa-briefcase" />
+          <i className="fas fa-briefcase" />
           <LinkText>Jobs</LinkText>
         </LinkDiv>
 
@@ -59,7 +59,7 @@ class Links extends Component {
           name={"/messaging"}
           active={activePage}
         >
-          <i class="fas fa-comments" />
+          <i className="fas fa-comments" />
           <LinkText>Messaging</LinkText>
         </LinkDiv>
 
@@ -68,7 +68,7 @@ class Links extends Component {
           name={"/notifications"}
           active={activePage}
         >
-          <i class="fas fa-bell" />
+          <i className="fas fa-bell" />
           <LinkText>Notifications</LinkText>
         </LinkDiv>
 
@@ -78,7 +78,7 @@ class Links extends Component {
         >
           <img src={user.avatar} alt="User avatar" />
           <LinkTextMe>
-            Me <i class="fas fa-sort-down" />
+            Me <i className="fas fa-sort-down" />
           </LinkTextMe>
         </LinkMe>
 

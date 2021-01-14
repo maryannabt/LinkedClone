@@ -24,12 +24,12 @@ class Community extends Component {
             <Main>
                 <TopBox>
                     <TopBoxText>Your communities</TopBoxText>
-                    <TopBoxLink href="#"><i class="fas fa-pencil-alt"></i></TopBoxLink>
+                    <TopBoxLink href="#"><i className="fas fa-pencil-alt"></i></TopBoxLink>
                 </TopBox>
 
                 <MiddleBox showWindow={this.state.groupWindowOpen}>
                     <MiddleBoxText>Groups</MiddleBoxText>
-                    <MiddleBoxLink showWindow={this.state.groupWindowOpen} onClick={this.displayGroups}> <i class="fas fa-angle-down"></i> </MiddleBoxLink>
+                    <MiddleBoxLink showWindow={this.state.groupWindowOpen} onClick={this.displayGroups}> <i className="fas fa-angle-down"></i> </MiddleBoxLink>
                 </MiddleBox>
 
                 <Groups showWindow={this.state.groupWindowOpen}>

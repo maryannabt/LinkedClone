@@ -10,9 +10,9 @@ class SmallLinks extends Component {
                 <Links>
                     <Link>About</Link>
                     <Link>Help Center</Link>
-                    <Link>Privacy & Terms<i class="fas fa-angle-down"></i></Link><br />
+                    <Link>Privacy & Terms<i className="fas fa-angle-down"></i></Link><br />
                     <Link>Advertising</Link>
-                    <Link>Business Services<i class="fas fa-angle-down"></i></Link><br />
+                    <Link>Business Services<i className="fas fa-angle-down"></i></Link><br />
                     <Link>Get the LinkedIn app</Link>
                     <Link>More</Link>
                 </Links>

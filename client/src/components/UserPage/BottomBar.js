@@ -29,7 +29,7 @@ class BottomBar extends Component {
           <RightColum>
             <RCBox>
               <RCIcon>
-                <i class="far fa-question-circle"></i>
+                <i className="far fa-question-circle"></i>
               </RCIcon>
               <RCLinkBox>
                 <RCLink>Questions?</RCLink>
@@ -39,7 +39,7 @@ class BottomBar extends Component {
 
             <RCBox>
               <RCIcon>
-                <i class="fas fa-cog"></i>
+                <i className="fas fa-cog"></i>
               </RCIcon>
               <RCLinkBox>
                 <RCLink>Manage your account and privacy.</RCLink>

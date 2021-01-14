@@ -40,7 +40,7 @@ class ProfileTop extends Component {
             {user && selectedUser._id === user._id && (
               <Buttons>
                 <AddSectionButton>
-                  Add profile section <i class="fas fa-sort-down"></i>
+                  Add profile section <i className="fas fa-sort-down"></i>
                 </AddSectionButton>
                 <MoreButton>More...</MoreButton>
               </Buttons>
@@ -49,28 +49,28 @@ class ProfileTop extends Component {
           <ProfileRight>
             <InfoButton>
               <InfoIcon>
-                <i class="fas fa-building"></i>
+                <i className="fas fa-building"></i>
               </InfoIcon>
               <InfoText>{selectedUser.company_name}</InfoText>
             </InfoButton>
 
             <InfoButton>
               <InfoIcon>
-                <i class="fas fa-university"></i>
+                <i className="fas fa-university"></i>
               </InfoIcon>
               <InfoText>HaKfar HaYarok - Environmental Leadership</InfoText>
             </InfoButton>
 
             <InfoButton>
               <InfoIconNoBG>
-                <i class="far fa-address-book"></i>
+                <i className="far fa-address-book"></i>
               </InfoIconNoBG>
               <InfoText>See Contact Info</InfoText>
             </InfoButton>
 
             <InfoButton>
               <InfoIconNoBG>
-                <i class="fas fa-user-friends"></i>
+                <i className="fas fa-user-friends"></i>
               </InfoIconNoBG>
               <InfoText>0 Conections</InfoText>
             </InfoButton>
@@ -112,7 +112,7 @@ class ProfileTop extends Component {
         >
           {!this.state.descriptionShowMore && "Show More"}
           {this.state.descriptionShowMore && "Show Less"}
-          <i class="fas fa-angle-down"></i>
+          <i className="fas fa-angle-down"></i>
         </ShowMore>
       </Wrapper>
     );

@@ -139,7 +139,7 @@ class NewPostModal extends Component {
             <SocialDiv>
               <Social>
                 <SocialLabel>
-                  <i class="fas fa-camera" />
+                  <i className="fas fa-camera" />
                   <UploadPhoto
                     type="file"
                     onChange={this.uploadImg}
@@ -147,8 +147,8 @@ class NewPostModal extends Component {
                     name="post_img"
                   />
                 </SocialLabel>
-                <i class="fas fa-video" />
-                <i class="fas fa-award" />
+                <i className="fas fa-video" />
+                <i className="fas fa-award" />
               </Social>
               <Button
                 onClick={this.displayNextStep}
@@ -177,7 +177,7 @@ class NewPostModal extends Component {
               selected={this.state.viewBy}
               onClick={() => this.setState({ viewBy: "anyone" })}
             >
-              <i class="fas fa-globe-americas" />
+              <i className="fas fa-globe-americas" />
               <OptionText>
                 <span>Anyone</span>
                 <VDiv name={"anyone"} selected={this.state.viewBy}>
@@ -191,7 +191,7 @@ class NewPostModal extends Component {
               selected={this.state.viewBy}
               onClick={() => this.setState({ viewBy: "twitter" })}
             >
-              <i class="fas fa-globe-americas" />
+              <i className="fas fa-globe-americas" />
               <OptionText>
                 <span>Anyone + Twitter</span>
                 <VDiv name={"twitter"} selected={this.state.viewBy}>
@@ -205,7 +205,7 @@ class NewPostModal extends Component {
               selected={this.state.viewBy}
               onClick={() => this.setState({ viewBy: "conections" })}
             >
-              <i class="fas fa-user-friends" />
+              <i className="fas fa-user-friends" />
               <OptionText>
                 <span>Connections only</span>
                 <VDiv name={"conections"} selected={this.state.viewBy}>
@@ -219,7 +219,7 @@ class NewPostModal extends Component {
               selected={this.state.viewBy}
               onClick={() => this.setState({ viewBy: "groups" })}
             >
-              <i class="fas fa-users" />
+              <i className="fas fa-users" />
               <OptionText>
                 <span>Group Name to be inserted Here</span>
                 <VDiv name={"groups"} selected={this.state.viewBy}>
@@ -231,7 +231,7 @@ class NewPostModal extends Component {
             <AdvancedOptions onClick={this.displayAdvanded}>
               <AdvancedOptionsButton flip={this.state.showAdvanced}>
                 Advanced settings
-                <i class="fas fa-angle-down" />
+                <i className="fas fa-angle-down" />
               </AdvancedOptionsButton>
             </AdvancedOptions>
             <AllowComment show={this.state.showAdvanced}>
