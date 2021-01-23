@@ -3,9 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "dotenv": "^6.2.0",
     "isomorphic-fetch": "^2.2.1",
-    "npm": "^6.6.0",
+    "npm": "^6.14.11",
     "react": "^16.7.0",
     "react-country-region-selector": "^1.4.3",
     "react-dom": "^16.7.0",

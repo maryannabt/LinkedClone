@@ -2,8 +2,6 @@ const express = require("express");
 const multer = require("multer");
 const cloudinary = require("cloudinary");
 
-require("dotenv").config();
-
 const router = express.Router();
 router.use(express.json());
 
