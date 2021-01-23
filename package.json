@@ -3,11 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
+  "engine": {
+    "node": "v14.15.4",
+    "npm": "6.14.11"
+  },
   "scripts": {
     "start": "node server.js",
     "dev:server": "nodemon server.js",
     "dev:client": "npm start --prefix client",
-    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\""
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "keywords": [],
   "author": "",

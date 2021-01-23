@@ -1,5 +1,6 @@
 const express = require("express");
 const morgan = require("morgan");
+const path = require('path');
 
 const db = require("./db/mongoose.connection");
 
@@ -9,8 +10,19 @@ const userRouter = require("./routes/api/user.router");
 const app = express();
 app.use(morgan("dev"));
 
+app.use(express.static(path.join("client", "build")));
+
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
+
+app.use((req, res, next) => {
+  res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+});
+
+// When no routes were matched
+// app.use("*", (req, res) => {
+//   res.status(404).json({ [req.url]: "Not found" });
+// });
 
 // Central error handling
 app.use((err, req, res, next) => {
@@ -18,11 +30,6 @@ app.use((err, req, res, next) => {
   if (process.env.NODE_ENV === "production")
     res.status(500).json({ error: "Internal server error" });
   else res.status(500).json({ error: err.message, stack: err.stack });
-});
-
-// When no routes were matched
-app.use("*", (req, res) => {
-  res.status(404).json({ [req.url]: "Not found" });
 });
 
 // Connect to MongoDB
